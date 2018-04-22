@@ -14,10 +14,8 @@ def parse_pos_tags(pos_tags):
 
 # Devuelve los verbos con su pos tag y posición en el texto ingresado
 # Retorna [{'token':token, 'pos_tag':pos_tag, 'posicion':posicion}]
-def obtener_verbos(texto):
-  tokens = nltk.word_tokenize(texto)
+def obtener_verbos(tokens):
   pos_tags = nltk.pos_tag(tokens)
   pos_tags_con_posiciones = parse_pos_tags(pos_tags)
   verbos = list(filter(es_verbo, pos_tags_con_posiciones))
   return verbos
-

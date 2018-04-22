@@ -1,0 +1,1 @@
+CARACTER_BLANCO = '____'
