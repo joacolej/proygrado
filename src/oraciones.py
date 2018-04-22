@@ -1,4 +1,6 @@
 import nltk
+from nltk.tokenize.moses import MosesDetokenizer
+from constantes import CARACTER_BLANCO
 
 # Función que separa un texto en oraciones
 def separar_oraciones(texto):
@@ -6,3 +8,9 @@ def separar_oraciones(texto):
     detector_oraciones = nltk.data.load('tokenizers/punkt/english.pickle')
     oraciones = detector_oraciones.tokenize(texto)
     return oraciones
+
+def sustituir_verbos(tokens, verbos):
+    for verbo in verbos:
+        tokens[verbo['posicion']] = CARACTER_BLANCO
+    detokenizer = MosesDetokenizer()
+    return detokenizer.detokenize(tokens, return_str=True)
