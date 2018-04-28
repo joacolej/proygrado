@@ -1,4 +1,11 @@
 import nltk
+import json
+
+# Importa y lee un archivo del tipo json
+def abrir_json_file(ruta_texto):
+    with open(ruta_texto) as data_file:
+        data = json.load(data_file)
+    data
 
 # Evalua según el pos tag si el token es un verbo
 def es_verbo(token_pos_tag):
@@ -23,3 +30,10 @@ def obtener_verbos(tokens):
     pos_tags_con_posiciones = parse_pos_tags(pos_tags)
     verbos = list(filter(lambda x: es_verbo(x) and not es_gerundio(x), pos_tags_con_posiciones))
     return verbos
+
+def filtrar_verbos(lista_verbos):
+    data = abrir_json_file('../recursos/lista_verbos_movers.json')
+    for verbo in lista_verbos:
+        if verbo['token'] in data['verbos']:
+            lista_verbos.remove(verbo)
+    lista_verbos
