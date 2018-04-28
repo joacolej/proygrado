@@ -5,7 +5,9 @@ import json
 def abrir_json_file(ruta_texto):
     with open(ruta_texto) as data_file:
         data = json.load(data_file)
-    data
+    return data
+
+from constantes import POS_TAGS_PRESENTE, POS_TAGS_PASADO_PARTICIPIO, POS_TAGS_PASADO
 
 # Evalua según el pos tag si el token es un verbo
 def es_verbo(token_pos_tag):
@@ -36,4 +38,12 @@ def filtrar_verbos(lista_verbos):
     for verbo in lista_verbos:
         if verbo['token'] in data['verbos']:
             lista_verbos.remove(verbo)
-    lista_verbos
+    return lista_verbos
+
+def obtener_tiempo(pos_tag):
+    if pos_tag in POS_TAGS_PRESENTE:
+        return 'present'
+    elif pos_tag in POS_TAGS_PASADO:
+        return 'past'
+    elif pos_tag in POS_TAGS_PASADO_PARTICIPIO:
+        return 'past participle'
