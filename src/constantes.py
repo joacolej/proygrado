@@ -1,1 +1,6 @@
 CARACTER_BLANCO = '____'
+
+# Tiempo de cada pos tag
+POS_TAGS_PRESENTE = ['VB', 'VBZ', 'VBP']
+POS_TAGS_PASADO = ['VBD']
+POS_TAGS_PASADO_PARTICIPIO = ['VBN']
