@@ -11,3 +11,18 @@
     cd pattern
     sudo python3 setup.py install
   ```
+5. **Instalar [mongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)**
+
+## MongoDB
+**Importar base de datos**
+
+```
+mongoimport --db diccionario_db --collection definiciones --file definiciones.json
+```
+
+
+**Exportar base de datos**
+
+```
+mongoexport --db diccionario_db --collection definiciones --out definiciones.json
+```
