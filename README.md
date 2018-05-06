@@ -1,4 +1,4 @@
-# Proyecto de grado 2018
+# Proyecto de grado 2018 :notebook: :uk: 
 
 ## Instalación
 1. **Clonar repositorio**: `git clone https://github.com/joacolej/proygrado.git`
