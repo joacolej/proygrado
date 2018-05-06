@@ -17,12 +17,12 @@
 **Importar base de datos**
 
 ```
-mongoimport --db diccionario_db --collection definiciones --file definiciones.json
+mongoimport --db diccionario_db --collection definiciones --file recursos/definiciones_backup.json
 ```
 
 
 **Exportar base de datos**
 
 ```
-mongoexport --db diccionario_db --collection definiciones --out definiciones.json
+mongoexport --db diccionario_db --collection definiciones --out recursos/definiciones_backup.json
 ```
