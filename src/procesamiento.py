@@ -1,3 +1,5 @@
+import nltk
+
 # Toma un texto taggeado y devuelve una lista que contiene "token, pos_tags, posicion_palabra"
 def parse_pos_tags(pos_tags):
     return [{ 'token':t, 'pos_tag':p, 'posicion':i } for i,(t,p) in enumerate(pos_tags)]

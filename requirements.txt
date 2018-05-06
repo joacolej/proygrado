@@ -24,6 +24,7 @@ portend==2.2
 py==1.5.3
 pycryptodome==3.6.1
 pylint==1.8.4
+pymongo==3.6.1
 pytest==3.5.0
 python-docx==0.8.6
 pytz==2018.4
