@@ -18,8 +18,13 @@ def procesar_diccionario(path):
                 if 'spanish' in sense and 'translation_list' in sense['spanish']:
                     definicion['traducciones'] = sense['spanish']['translation_list']
                 definiciones.append(definicion)
+        if any(entrada['headword_ne'] ==  d['palabra'] for d in json_salida):
+            elem = [item for item in json_salida if item['palabra'] == entrada['headword_ne']][0]
+            elem['definiciones'].append(definiciones)
+            continue
         salida = {
             'palabra': entrada['headword_ne'],
             'definiciones': definiciones
         }
         if len(salida['definiciones']) > 0: json_salida.append(salida)
+    return json_salida

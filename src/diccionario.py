@@ -17,7 +17,7 @@ class Diccionario:
             Diccionario.instance = Diccionario.__Diccionario()
         else:
             Diccionario.instance
-    
+
     def __getattr__(self, name):
         return getattr(self.instance, name)
 
@@ -28,7 +28,7 @@ class Diccionario:
         self.definiciones.delete_one({ 'palabra': palabra })
 
     def listar_definiciones(self):
-        return self.deficiones.find()
+        return self.definiciones.find()
 
     def buscar_definicion(self, palabra):
         return self.definiciones.find_one({ 'palabra': palabra})
