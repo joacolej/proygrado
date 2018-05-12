@@ -13,9 +13,9 @@ def separar_oraciones(texto):
     return oraciones
 
 def sustituir_verbos(tokens, verbos):
-    for verbo in verbos:
+    for idx, verbo in enumerate(verbos):
         tiempo_verbal = vb.obtener_tiempo(verbo['pos_tag'])
-        tokens[verbo['posicion']] = CARACTER_BLANCO + ' (' + tiempo_verbal + ')'
+        tokens[verbo['posicion']] = str(idx) + ') ' + CARACTER_BLANCO + '(' + tiempo_verbal + ')'
     detokenizer = MosesDetokenizer()
     return detokenizer.detokenize(tokens, return_str=True)
 

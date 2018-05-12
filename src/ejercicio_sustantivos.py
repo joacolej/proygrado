@@ -1,6 +1,7 @@
 import nltk
 import sustantivos as st
 import oraciones as orac
+import random
 
 # Ejercicio para matchear sustantivos con sus definiciones
 def ejercicio_sustantivos(nombre_texto):
@@ -23,6 +24,8 @@ def procesar_ejercicio_sustantivos(texto):
             'palabra': sustantivo['token'], 'definicion': definicion 
         }
         soluciones.append(solucion)
+    random.shuffle(palabras)
+    random.shuffle(definiciones)
     ejercicio = {
         'palabras': palabras,
         'definiciones': definiciones,

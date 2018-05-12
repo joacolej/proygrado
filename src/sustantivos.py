@@ -16,15 +16,21 @@ def es_sustantivo(token_pos_tag):
 
 # Retorna si la palabra pasada por parametro se encuentra en el diccionario
 def esta_diccionario(sustantivo):
-    definicion = dicc.buscar_definicion(sustantivo)
+    definicion = encontrar_definicion(sustantivo)
     if definicion:
         return True
+    return False
+
+# Devuelve la definicion encontrada asociada a un sustantivo
+# Si no la encuntra devuelve NoneType
+def encontrar_definicion(sustantivo):    
+    definicion = dicc.buscar_definicion(sustantivo)
+    if definicion:
+        return definicion
     else:
         lema = lemma(sustantivo)
-        definicion = dicc.buscar_definicion(lema)
-        if definicion:
-            return True
-    return False
+        return dicc.buscar_definicion(lema)
+
 
 # Devuelve las palabras de un texto tokenizado que son sustantivos y ademas pertenecen al diccionario.
 def obtener_sustantivos(tokens):
@@ -36,7 +42,7 @@ def filtrar_sustantivos(tokens, cant_sustantivos):
 # Devuelve la definicion de un sustantivo. 
 # En caso de haber mas de una busca segun el sentido de la palabra en el texto tokenizado.
 def obtener_mejor_definicion(tokens, sustantivo):
-    definiciones = dicc.buscar_definicion(sustantivo)['definiciones']
+    definiciones = encontrar_definicion(sustantivo)['definiciones']
     sustantivos_def = list(filter(lambda x: x['tipo'] == 'noun', definiciones))
     if len(sustantivos_def) == 1:
         return definiciones[0]['definicion']

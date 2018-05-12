@@ -1,7 +1,7 @@
 import nltk
 import verbos as vb
 import oraciones as orac
-from pattern.en import conjugate, lemma, lexeme
+from pattern.en import lexeme
 
 def ejercicio_verbos(nombre_texto):
     archivo = open(nombre_texto, 'r+')
@@ -16,9 +16,10 @@ def procesar_ejercicio_verbos(texto):
     for idx, verbo in enumerate(lista_verbos):
         conjugaciones = lexeme(verbo['token'])
         opcion = {
-            'posicion': idx,
-            'opciones': conjugaciones,
-            'solucion': verbo['token']
+            'posicion': verbo['posicion'],
+            'variantes': conjugaciones,
+            'solucion': verbo['token'],
+            'referencia': str(idx) + ')'
         }
         opciones.append(opcion)
     ejercicio = {
