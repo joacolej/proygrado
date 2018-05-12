@@ -3,7 +3,6 @@ import verbos as vb
 import oraciones as orac
 from pattern.en import lexeme
 
-
 def ejercicio_verbos(nombre_texto):
     archivo = open(nombre_texto, 'r+')
     data = archivo.read()
