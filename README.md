@@ -26,3 +26,10 @@ mongoimport --db diccionario_db --collection definiciones --file recursos/defini
 ```
 mongoexport --db diccionario_db --collection definiciones --out recursos/definiciones_backup.json
 ```
+
+## ServidorWeb
+**Ejecutar servidor**
+
+```
+python api.py
+```
