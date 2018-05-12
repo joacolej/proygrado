@@ -1,5 +1,6 @@
 import nltk
 from nltk.tokenize.moses import MosesDetokenizer
+from pattern.en import pluralize, singularize
 
 import verbos as vb
 from constantes import CARACTER_BLANCO
@@ -17,3 +18,11 @@ def sustituir_verbos(tokens, verbos):
         tokens[verbo['posicion']] = CARACTER_BLANCO + ' (' + tiempo_verbal + ')'
     detokenizer = MosesDetokenizer()
     return detokenizer.detokenize(tokens, return_str=True)
+
+def sustituir_sustantivo(tokens, sustantivo):
+    tokens = [CARACTER_BLANCO if es_la_misma_palabra(x.lower(), sustantivo.lower()) else x for x in tokens]
+    detokenizer = MosesDetokenizer()
+    return detokenizer.detokenize(tokens, return_str=True)
+    
+def es_la_misma_palabra(x, sustantivo):
+    return (x == singularize(sustantivo) or x == pluralize(singularize(sustantivo)))
