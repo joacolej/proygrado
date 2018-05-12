@@ -12,10 +12,10 @@ def separar_oraciones(texto):
     oraciones = detector_oraciones.tokenize(texto)
     return oraciones
 
-def sustituir_verbos(tokens, verbos):
+def sustituir_verbos(tokens, verbos, corrimiento):
     for idx, verbo in enumerate(verbos):
         tiempo_verbal = vb.obtener_tiempo(verbo['pos_tag'])
-        tokens[verbo['posicion']] = str(idx) + ') ' + CARACTER_BLANCO + '(' + tiempo_verbal + ')'
+        tokens[verbo['posicion']] = '(' + str(idx + corrimiento) + ') ' + CARACTER_BLANCO + '(' + tiempo_verbal + ')'
     detokenizer = MosesDetokenizer()
     return detokenizer.detokenize(tokens, return_str=True)
 
@@ -23,6 +23,6 @@ def sustituir_sustantivo(tokens, sustantivo):
     tokens = [CARACTER_BLANCO if es_la_misma_palabra(x.lower(), sustantivo.lower()) else x for x in tokens]
     detokenizer = MosesDetokenizer()
     return detokenizer.detokenize(tokens, return_str=True)
-    
+
 def es_la_misma_palabra(x, sustantivo):
     return (x == singularize(sustantivo) or x == pluralize(singularize(sustantivo)))
