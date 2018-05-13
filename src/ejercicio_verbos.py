@@ -14,10 +14,10 @@ def procesar_ejercicio_verbos(texto):
     posicion_inicial = 0
     cant_verbos = 0
     texto_ejercicio = []
+    opciones = []
     for parrafo in parrafos:
         tokens = nltk.word_tokenize(parrafo)
         lista_verbos = vb.obtener_verbos(tokens)
-        opciones = []
         for idx, verbo in enumerate(lista_verbos):
             conjugaciones = lexeme(verbo['token'])
             opcion = {
