@@ -20,6 +20,7 @@ def procesar_ejercicio_verbos(texto):
         lista_verbos = vb.obtener_verbos(tokens)
         for idx, verbo in enumerate(lista_verbos):
             conjugaciones = lexeme(verbo['token'])
+            conjugaciones = vb.filtrar_conjugaciones(verbo, conjugaciones)
             opcion = {
                 'posicion': verbo['posicion'] + posicion_inicial,
                 'variantes': conjugaciones,

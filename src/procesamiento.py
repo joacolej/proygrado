@@ -11,3 +11,13 @@ def obtener_palabras(filtro, tokens):
     pos_tags_con_posiciones = parse_pos_tags(pos_tags)
     palabras = list(filter(filtro, pos_tags_con_posiciones))
     return palabras
+
+def flatten(lista):
+    lista_plana = []
+    for sublista in lista:
+        if isinstance(sublista, list):
+            for item in sublista:
+                lista_plana.append(item)
+        else:
+            lista_plana.append(sublista)
+    return lista_plana
