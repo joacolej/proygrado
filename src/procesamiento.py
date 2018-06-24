@@ -12,6 +12,13 @@ def obtener_palabras(filtro, tokens):
     palabras = list(filter(filtro, pos_tags_con_posiciones))
     return palabras
 
+def serialize_ojectid(lista):
+    results = []
+    for document in lista:
+        document['_id'] = str(document['_id'])
+        results.append(document)
+    return results
+
 def flatten(lista):
     lista_plana = []
     for sublista in lista:

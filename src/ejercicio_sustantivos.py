@@ -30,6 +30,7 @@ def procesar_ejercicio_sustantivos(texto):
     ejercicio = {
         'palabras': palabras,
         'definiciones': definiciones,
-        'soluciones': soluciones
+        'soluciones': soluciones,
+        'tipo': 'sustantivos'
     }
     return ejercicio
