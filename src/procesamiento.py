@@ -1,4 +1,5 @@
 import nltk
+import random
 
 # Toma un texto taggeado y devuelve una lista que contiene "token, pos_tags, posicion_palabra"
 def parse_pos_tags(pos_tags):
@@ -6,10 +7,11 @@ def parse_pos_tags(pos_tags):
 
 # Devuelve las palabras con su pos tag y posición en el texto ingresado
 # Retorna [{'token':token, 'pos_tag':pos_tag, 'posicion':posicion}]
-def obtener_palabras(filtro, tokens):
+def obtener_palabras(filtro, tokens, max_palabras):
     pos_tags = nltk.pos_tag(tokens)
     pos_tags_con_posiciones = parse_pos_tags(pos_tags)
-    palabras = list(filter(filtro, pos_tags_con_posiciones))
+    posibles = list(filter(filtro, pos_tags_con_posiciones))
+    palabras = elegir_elementos(posibles, max_palabras)
     return palabras
 
 def flatten(lista):
@@ -21,3 +23,9 @@ def flatten(lista):
         else:
             lista_plana.append(sublista)
     return lista_plana
+
+def elegir_elementos(lista, max_palabras):
+    lista_desordenada = list(lista)
+    random.shuffle(lista_desordenada)
+    lista_ret = [elem for elem in lista if elem in lista_desordenada]
+    return lista[:max_palabras]
