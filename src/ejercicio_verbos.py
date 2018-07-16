@@ -33,6 +33,7 @@ def procesar_ejercicio_verbos(texto):
         cant_verbos = cant_verbos + len(lista_verbos)
     ejercicio = {
         'texto': '\n'.join(texto_ejercicio),
-        'opciones': opciones
+        'opciones': opciones,
+        'tipo': 'verbos'
     }
     return ejercicio
