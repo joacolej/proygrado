@@ -1,6 +1,7 @@
 Flask==1.0.2
-flask_cors==3.0.6
-flask_restful==0.3.6
+Flask-Cors==3.0.4
+Flask-RESTful==0.3.6
 nltk==3.3
-pymongo==3.7.1
+Pattern==2.6
+pymongo==3.6.1
 gensim
