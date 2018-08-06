@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import nltk
-from sacremoses import MosesDetokenizer
+from nltk.tokenize.treebank import TreebankWordDetokenizer
 from pattern.en import pluralize, singularize
 
 import verbos as vb
@@ -18,13 +18,13 @@ def sustituir_verbos(tokens, verbos, corrimiento):
     for idx, verbo in enumerate(verbos):
         tiempo_verbal = vb.obtener_tiempo(verbo['pos_tag'])
         tokens[verbo['posicion']] = '(' + str(idx + corrimiento) + ') ' + CARACTER_BLANCO + '(' + tiempo_verbal + ')'
-    detokenizer = MosesDetokenizer()
-    return detokenizer.detokenize(tokens, return_str=True)
+    detokenizer = TreebankWordDetokenizer()
+    return detokenizer.detokenize(tokens)
 
 def sustituir_sustantivo(tokens, sustantivo):
     tokens = [CARACTER_BLANCO if es_la_misma_palabra(x.lower(), sustantivo.lower()) else x for x in tokens]
-    detokenizer = MosesDetokenizer()
-    return detokenizer.detokenize(tokens, return_str=True)
+    detokenizer = TreebankWordDetokenizer()
+    return detokenizer.detokenize(tokens)
 
 def es_la_misma_palabra(x, sustantivo):
     return (x == singularize(sustantivo) or x == pluralize(singularize(sustantivo)))
