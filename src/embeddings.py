@@ -10,8 +10,8 @@ class Embeddings:
         if not model_sentences is None:
             self.model = Word2Vec.load(model_path)
 
-    def save_model(self, path):
+    def guardar_modelo(self, path):
         self.model.save(path)
 
-    def get_similar_words(self, word):
+    def obtener_palabras_similares(self, word):
         model.wv.most_similar(positive=word)
