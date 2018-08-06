@@ -1,5 +1,7 @@
+# coding=utf-8
+
 import nltk
-from nltk.tokenize.moses import MosesDetokenizer
+from sacremoses import MosesDetokenizer
 from pattern.en import pluralize, singularize
 
 import verbos as vb

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import nltk
 
 # Toma un texto taggeado y devuelve una lista que contiene "token, pos_tags, posicion_palabra"
