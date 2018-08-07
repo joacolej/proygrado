@@ -18,5 +18,5 @@ def procesar_use_en(texto):
         tokens = nltk.word_tokenize(oracion)
         lista_palabras = use_en.seleccionar_palabras(tokens)
         for palabra in lista_palabras:
-            opciones = obtener_opciones(palabra, oracion)
+            opciones = use_en.obtener_opciones(palabra['token'], oracion)
     return ejercicio
