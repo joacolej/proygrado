@@ -21,6 +21,13 @@ def serialize_ojectid(lista):
         results.append(document)
     return results
 
+def obtener_frecuencias(texto):
+    frecuencias = {}
+    tokens = nltk.word_tokenize(texto)
+    tokens = list(filter(lambda x: x != '.' and x != ',' and x != ';', tokens))
+    frecuencias = { i:tokens.count(i) for i in set(tokens) }
+    return frecuencias
+
 def flatten(lista):
     lista_plana = []
     for sublista in lista:
