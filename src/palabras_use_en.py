@@ -6,6 +6,8 @@ import verbos as vb
 from modelo_lenguaje import score_texto
 from embeddings import Embeddings
 from lista_de_frecuencia import Frecuencia
+from utils import abrir_json_file
+
 
 def seleccionar_palabras(tokens, lista_palabras = None, limite = 1):
     lista = st.obtener_sustantivos(tokens) + vb.obtener_verbos(tokens)
@@ -22,10 +24,27 @@ def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
     for opcion in opciones:
         texto_opcion = oracion.replace(palabra, opcion)
         opcion_score = score_texto(texto_opcion)
-        score_diferencia = opcion_score - palabra_score
+        score_diferencia = palabra_score - opcion_score
         mejores_opciones.append((opcion, score_diferencia))
-    print(mejores_opciones)
-    return list(reversed(sorted(mejores_opciones)))[0:cant_palabras]
+    mejores_opciones.sort(key=lambda x: x[1])
+    mejores_opciones_sorted = list(reversed(mejores_opciones))
+    return mejores_opciones_sorted[0:cant_palabras]
+
+def obtener_sustativos_movers(palabra, oracion):
+    data = abrir_json_file('../recursos/lista_palabras_movers.json')
+    palabras_movers = data['palabras']
+    sustantivos_movers = []
+    for palabra_movers in palabras_movers:
+        texto_opcion = oracion.replace(palabra, palabra_movers)
+        texto_tokenized = nltk.word_tokenize(texto_opcion)
+        tokens = nltk.pos_tag(texto_tokenized)
+        # Encontrar si el token es un sustantivo
+        es_sustantivo = False
+        for token in tokens:
+            es_sustantivo = es_sustantivo | (token[1][0:2] == 'NN')
+        if es_sustantivo:
+            sustantivos_movers.append(palabra_movers)
+    return sustantivos_movers
 
 # Funcion que retorna 3 opciones similares pero con baja probabilidad en el modelo de lenguaje
 def obtener_opciones(palabra, oracion):

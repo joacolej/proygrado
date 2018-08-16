@@ -1,17 +1,10 @@
 # coding=utf-8
-
 import nltk
-import json
 import random
 from constantes import POS_TAGS_PRESENTE, POS_TAGS_PASADO_PARTICIPIO, POS_TAGS_PASADO
 from procesamiento import obtener_palabras
 from pattern.en import tenses, PAST, PRESENT
-
-# Importa y lee un archivo del tipo json
-def abrir_json_file(ruta_texto):
-    with open(ruta_texto) as data_file:
-        data = json.load(data_file)
-    return data
+from utils import abrir_json_file
 
 # Evalua según el pos tag si el token es un verbo
 def es_verbo(token_pos_tag):
@@ -31,9 +24,9 @@ def obtener_verbos(tokens):
     return obtener_palabras(lambda x: es_verbo(x) and not es_gerundio(x), tokens)
 
 def filtrar_verbos(lista_verbos):
-    data = abrir_json_file('../recursos/lista_verbos_movers.json')
+    data = abrir_json_file('../recursos/lista_palabras_movers.json')
     for verbo in lista_verbos:
-        if verbo['token'] in data['verbos']:
+        if verbo['token'] in data['palabras']:
             lista_verbos.remove(verbo)
     return lista_verbos
 
