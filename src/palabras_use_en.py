@@ -1,11 +1,18 @@
 import nltk
+from nltk.stem import WordNetLemmatizer
 from procesamiento import obtener_palabras, flatten
 import sustantivos as st
+import verbos as vb
 from modelo_lenguaje import score_texto
 from embeddings import Embeddings
+from lista_de_frecuencia import Frecuencia
 
-def seleccionar_palabras(tokens):
-    return st.obtener_sustantivos(tokens)
+def seleccionar_palabras(tokens, lista_palabras = None, limite = 10):
+    lista = st.obtener_sustantivos(tokens) + vb.obtener_verbos(tokens)
+    if not lista_palabras is None:
+        lista = [palabra for palabra in lista if palabra['token'].WordNetLemmatizer() in lista_palabras]
+    frec = Frecuencia()
+    return frec.ordenar_por_frecuencia(lista)[0:limite]
 
 # TODO: problema de palabras duplicadas
 def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
@@ -31,7 +38,7 @@ def obtener_opciones(palabra, oracion):
     # 1. Cambiar configuracion de word embeddings (incluyendo cambio de corpus)
     # 2. Agregar palabras por fuera de word embeddings (palabras frecuentes y lista generada) y testearlas con el modelo de lenguaje
     modelo_embeddings = Embeddings('wiki-simple')
-    tuplas_posibles = modelo_embeddings.obtener_palabras_similares(palabra)    
+    tuplas_posibles = modelo_embeddings.obtener_palabras_similares(palabra)
 
     opciones_posibles = [tupla[0] for tupla in tuplas_posibles]
     opciones = filtrar_palabras(palabra, opciones_posibles, oracion)
