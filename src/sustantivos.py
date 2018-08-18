@@ -23,7 +23,7 @@ def esta_diccionario(sustantivo):
 
 # Devuelve la definicion encontrada asociada a un sustantivo
 # Si no la encuntra devuelve NoneType
-def encontrar_definicion(sustantivo):    
+def encontrar_definicion(sustantivo):
     definicion = dicc.buscar_definicion(sustantivo)
     if definicion:
         definiciones = definicion['definiciones']
@@ -39,16 +39,16 @@ def encontrar_definicion(sustantivo):
                 definiciones = flatten(definiciones)
                 definiciones = list(filter(lambda x: x['tipo'] == 'noun', definiciones))
                 return definiciones
-    return definicion 
+    return definicion
 
 # Devuelve las palabras de un texto tokenizado que son sustantivos y ademas pertenecen al diccionario.
-def obtener_sustantivos(tokens):
-    return obtener_palabras(lambda x: es_sustantivo(x) and esta_diccionario(x['token']), tokens)
+def obtener_sustantivos(tokens, max_sustantivos):
+    return obtener_palabras(lambda x: es_sustantivo(x) and esta_diccionario(x['token']), tokens, max_sustantivos)
 
 def filtrar_sustantivos(tokens, cant_sustantivos):
     return tokens[:cant_sustantivos]
 
-# Devuelve la definicion de un sustantivo. 
+# Devuelve la definicion de un sustantivo.
 # En caso de haber mas de una busca segun el sentido de la palabra en el texto tokenizado.
 def obtener_mejor_definicion(tokens, sustantivo):
     definiciones = encontrar_definicion(sustantivo)

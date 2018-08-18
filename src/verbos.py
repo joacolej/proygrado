@@ -27,8 +27,8 @@ def es_gerundio(token_pos_tag):
 
 # Devuelve los verbos con su pos tag y posición en el texto ingresado
 # Retorna [{'token':token, 'pos_tag':pos_tag, 'posicion':posicion}]
-def obtener_verbos(tokens):
-    return obtener_palabras(lambda x: es_verbo(x) and not es_gerundio(x), tokens)
+def obtener_verbos(tokens, max_verbos):
+    return obtener_palabras(lambda x: es_verbo(x) and not es_gerundio(x), tokens, max_verbos)
 
 def filtrar_verbos(lista_verbos):
     data = abrir_json_file('../recursos/lista_verbos_movers.json')
