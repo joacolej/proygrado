@@ -34,5 +34,5 @@ mongoexport --db diccionario_db --collection definiciones --out recursos/definic
 **Ejecutar servidor**
 
 ```bash
-python src/api.py
+gunicorn wgsi:app
 ```
