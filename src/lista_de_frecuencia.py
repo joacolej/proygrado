@@ -4,7 +4,7 @@ class Frecuencia:
     def __init__(self):
         self.data = pd.read_csv('../recursos/frequency_wikimedia', sep=" ", header=None)
         self.data.columns = ['numero', 'palabra', 'frecuencia']
-        self.data = data.drop(columns=['numero'])
+        self.data = self.data.drop(columns=['numero'])
 
     def obtener_frecuencia(self, palabra):
         if palabra in self.data['palabra'].tolist():

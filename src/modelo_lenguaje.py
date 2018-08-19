@@ -1,6 +1,6 @@
 import kenlm
 
-model_path = '../recursos/modelos/wiki-simple.klm'
+model_path = '../../wiki.klm'
 # model_path = '../../language-model/modelos/wiki.klm'
 model = kenlm.LanguageModel(model_path)
 

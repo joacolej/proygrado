@@ -26,5 +26,10 @@ def sustituir_sustantivo(tokens, sustantivo):
     detokenizer = TreebankWordDetokenizer()
     return detokenizer.detokenize(tokens)
 
+def sustituir_palabra(tokens, sustantivo, idx):
+    tokens = ['(' + str(idx) + ') ' + CARACTER_BLANCO if es_la_misma_palabra(x.lower(), sustantivo.lower()) else x for x in tokens]
+    detokenizer = TreebankWordDetokenizer()
+    return detokenizer.detokenize(tokens)
+
 def es_la_misma_palabra(x, sustantivo):
     return (x == singularize(sustantivo) or x == pluralize(singularize(sustantivo)))
