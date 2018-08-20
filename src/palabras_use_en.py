@@ -17,18 +17,24 @@ def seleccionar_palabras(tokens, lista_palabras = None, limite = 1):
     return frec.ordenar_por_frecuencia(lista)[0:limite]
 
 # TODO: problema de palabras duplicadas
-def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
-    palabra_score = score_texto(oracion)
+def filtrar_palabras(palabra, opciones, oracion, cant_palabras=8):
+
+    tokens = nltk.word_tokenize(oracion)
+    tokens = list(filter(lambda x: x != '.' and x != ',' and x != ';', tokens))
+    oracion_sin_puntuacion = ' '.join(tokens)
+
+    palabra_score = score_texto(oracion_sin_puntuacion)
     # Las mejores opciones son las que tienen mas distancia en el score
     mejores_opciones = []
     for opcion in opciones:
-        texto_opcion = oracion.replace(palabra, opcion)
+        texto_opcion = oracion_sin_puntuacion.replace(palabra, opcion)
         opcion_score = score_texto(texto_opcion)
         score_diferencia = palabra_score - opcion_score
         mejores_opciones.append((opcion, score_diferencia))
     mejores_opciones.sort(key=lambda x: x[1])
     mejores_opciones_sorted = list(reversed(mejores_opciones))
-    return mejores_opciones_sorted[0:cant_palabras]
+    mejores_opciones_sorted = [elem[0] for elem in mejores_opciones_sorted]
+    return mejores_opciones_sorted[5:cant_palabras]
 
 def filtrar_opciones_por_frecuencia(opciones):
     mejores_por_frecuencia = []
@@ -36,11 +42,11 @@ def filtrar_opciones_por_frecuencia(opciones):
     mejores_por_frecuencia = opciones_ordenadas[:10]
     return mejores_por_frecuencia
 
-def obtener_opciones_movers(palabra, oracion):
+def obtener_opciones_movers(pos_tag, oracion):
     data = abrir_json_file('../recursos/lista_palabras_movers.json')
     palabras_movers = data['palabras']
     opciones_movers = []
-    palabra_synset = postag_a_synset(palabra[1])
+    palabra_synset = postag_a_synset(pos_tag)
     for palabra_movers in palabras_movers:
         # Encontrar si el token pertenece a la misma clase que la palabra
         igual_categoria = tiene_igual_synset(palabra_movers, palabra_synset)
