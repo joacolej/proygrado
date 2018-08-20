@@ -7,7 +7,7 @@ from modelo_lenguaje import score_texto
 from embeddings import Embeddings
 from lista_de_frecuencia import Frecuencia
 
-def seleccionar_palabras(tokens, lista_palabras = None, limite = 10):
+def seleccionar_palabras(tokens, lista_palabras = None, limite = 1):
     lista = st.obtener_sustantivos(tokens) + vb.obtener_verbos(tokens)
     if not lista_palabras is None:
         lista = [palabra for palabra in lista if palabra['token'].WordNetLemmatizer() in lista_palabras]
