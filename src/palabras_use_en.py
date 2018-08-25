@@ -1,6 +1,6 @@
 import nltk
 from nltk.stem import WordNetLemmatizer
-from procesamiento import obtener_palabras, flatten, tiene_igual_synset
+from procesamiento import flatten, tiene_igual_synset
 import sustantivos as st
 import verbos as vb
 from modelo_lenguaje import score_texto
@@ -10,8 +10,8 @@ from lista_de_frecuencia import Frecuencia
 
 frec = Frecuencia()
 
-def seleccionar_palabras(tokens, lista_palabras = None, limite = 1):
-    lista = st.obtener_sustantivos(tokens) + vb.obtener_verbos(tokens)
+def seleccionar_palabras(oracion, lista_palabras = None, limite = 1):
+    lista = st.obtener_sustantivos(oracion) + vb.obtener_verbos(oracion)
     if not lista_palabras is None:
         lista = [palabra for palabra in lista if palabra['token'].WordNetLemmatizer() in lista_palabras]
     return frec.ordenar_por_frecuencia(lista)[0:limite]

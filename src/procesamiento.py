@@ -2,6 +2,7 @@
 
 import nltk
 from nltk.corpus import wordnet as wordnet
+from pattern.en import tag
 
 # Toma un texto taggeado y devuelve una lista que contiene "token, pos_tags, posicion_palabra"
 def parse_pos_tags(pos_tags):
@@ -9,8 +10,8 @@ def parse_pos_tags(pos_tags):
 
 # Devuelve las palabras con su pos tag y posición en el texto ingresado
 # Retorna [{'token':token, 'pos_tag':pos_tag, 'posicion':posicion}]
-def obtener_palabras(filtro, tokens):
-    pos_tags = nltk.pos_tag(tokens)
+def obtener_palabras(filtro, texto):
+    pos_tags = tag(texto)
     pos_tags_con_posiciones = parse_pos_tags(pos_tags)
     palabras = list(filter(filtro, pos_tags_con_posiciones))
     return palabras

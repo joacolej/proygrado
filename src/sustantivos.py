@@ -42,8 +42,8 @@ def encontrar_definicion(sustantivo):
     return definicion 
 
 # Devuelve las palabras de un texto tokenizado que son sustantivos y ademas pertenecen al diccionario.
-def obtener_sustantivos(tokens):
-    return obtener_palabras(lambda x: es_sustantivo(x) and esta_diccionario(x['token']), tokens)
+def obtener_sustantivos(texto):
+    return obtener_palabras(lambda x: es_sustantivo(x) and esta_diccionario(x['token']), texto)
 
 def filtrar_sustantivos(tokens, cant_sustantivos):
     return tokens[:cant_sustantivos]
