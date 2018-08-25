@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import nltk
+from nltk.corpus import wordnet as wordnet
 
 # Toma un texto taggeado y devuelve una lista que contiene "token, pos_tags, posicion_palabra"
 def parse_pos_tags(pos_tags):
@@ -13,6 +14,10 @@ def obtener_palabras(filtro, tokens):
     pos_tags_con_posiciones = parse_pos_tags(pos_tags)
     palabras = list(filter(filtro, pos_tags_con_posiciones))
     return palabras
+
+def tiene_igual_synset(palabra, pos_tag):
+    synsets = wordnet.synsets(palabra) 
+    return any(synset.pos() == pos_tag and palabra in synset.lemma_names() for synset in synsets)
 
 def serialize_ojectid(lista):
     results = []
