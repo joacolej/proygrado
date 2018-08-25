@@ -1,4 +1,5 @@
 import nltk
+from random import shuffle
 import sustantivos as st
 import oraciones as orac
 import palabras_use_en as use_en
@@ -25,6 +26,8 @@ def procesar_use_en(texto):
             referencia_actual = next(referencia)
             variantes = use_en.obtener_opciones_movers(palabra['pos_tag'], oracion)
             variantes_finales = use_en.filtrar_palabras(palabra['token'], variantes, oracion)
+            variantes_finales.append(palabra['token'])
+            shuffle(variantes_finales)
             opcion = {
                 'variantes': variantes_finales,
                 'solucion': palabra['token'],
