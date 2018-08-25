@@ -17,7 +17,7 @@ def procesar_ejercicio_verbos(texto):
     opciones = []
     for parrafo in parrafos:
         tokens = nltk.word_tokenize(parrafo)
-        lista_verbos = vb.obtener_verbos(tokens)
+        lista_verbos = vb.obtener_verbos(parrafo)
         for idx, verbo in enumerate(lista_verbos):
             conjugaciones = lexeme(verbo['token'])
             conjugaciones = vb.filtrar_conjugaciones(verbo, conjugaciones)

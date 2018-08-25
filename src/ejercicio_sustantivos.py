@@ -13,7 +13,7 @@ def ejercicio_sustantivos(nombre_texto):
 # Retorna los sustantivos seleccionados con su correspondiente definicion
 def procesar_ejercicio_sustantivos(texto):
     tokens = nltk.word_tokenize(texto)
-    lista_sustantivos = st.obtener_sustantivos(tokens)
+    lista_sustantivos = st.obtener_sustantivos(texto)
     lista_sustantivos = list({ each['token'] : each for each in lista_sustantivos }.values())
     palabras, definiciones, soluciones = ([] for i in range(3))
     for sustantivo in lista_sustantivos:

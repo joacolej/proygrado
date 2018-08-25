@@ -21,7 +21,7 @@ def procesar_use_en(texto):
     referencia = itertools.count()
     for oracion in oraciones:
         tokens = nltk.word_tokenize(oracion)
-        lista_palabras = use_en.seleccionar_palabras(tokens)
+        lista_palabras = use_en.seleccionar_palabras(oracion)
         for palabra in lista_palabras:
             referencia_actual = next(referencia)
             variantes = use_en.obtener_opciones_movers(palabra['pos_tag'], oracion)
