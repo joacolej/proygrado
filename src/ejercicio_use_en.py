@@ -23,9 +23,6 @@ def procesar_use_en(texto):
         lista_palabras = use_en.seleccionar_palabras(tokens)
         for palabra in lista_palabras:
             referencia_actual = next(referencia)
-            print('PALABRA')
-            print(palabra)
-            print(tokens)
             variantes = use_en.obtener_opciones_movers(palabra['pos_tag'], oracion)
             variantes_finales = use_en.filtrar_palabras(palabra['token'], variantes, oracion)
             opcion = {
