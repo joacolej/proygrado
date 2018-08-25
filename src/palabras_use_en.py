@@ -1,12 +1,13 @@
 import nltk
 from nltk.stem import WordNetLemmatizer
-from procesamiento import flatten, tiene_igual_synset
+from procesamiento import flatten, tiene_igual_synset, parse_pos_tags
 import sustantivos as st
 import verbos as vb
 from modelo_lenguaje import score_texto
 from embeddings import Embeddings
 from utils import abrir_json_file, postag_a_synset
 from lista_de_frecuencia import Frecuencia
+from pattern.en import tag
 
 frec = Frecuencia()
 
@@ -52,6 +53,46 @@ def obtener_opciones_movers(pos_tag, oracion):
         igual_categoria = tiene_igual_synset(palabra_movers, palabra_synset)
         if igual_categoria:
             opciones_movers.append(palabra_movers)
+    return opciones_movers
+
+def filtro_pos_tagger(palabra, oracion):
+    data = abrir_json_file('../recursos/lista_palabras_movers.json')
+    palabras_movers = data['palabras']
+    opciones_movers = []
+    palabra_synset = postag_a_synset(palabra['pos_tag'])
+    for palabra_movers in palabras_movers:
+        texto_opcion = oracion.replace(palabra['token'], palabra_movers)
+        pos_tags = tag(texto_opcion)
+        parsed_pos_tag = parse_pos_tags(pos_tags)
+        # Encontrar si el token pertenece a la misma clase que la palabra
+        descartar_palabra = False
+        for word in parsed_pos_tag:
+            if word['token'] == palabra_movers:
+                es_verbo = vb.es_verbo(word)
+                # Obtenemos el valor de la palabra a procesar
+                if (es_verbo):
+                    es_verbo_presente = vb.obtener_tiempo(word['pos_tag']) == 'present'
+                    if (not es_verbo_presente):
+                        descartar_palabra = True
+                    distractor = vb.verbo_a_infinitivo(word['token'])
+                    if (word['pos_tag'][0:2] != palabra['pos_tag'][0:2]):
+                        descartar_palabra = True
+                else:
+                    distractor = palabra_movers
+                    # Descartar si el pos tag del distractor y de la opcion coinciden
+                    if (word['pos_tag'] != palabra['pos_tag']):
+                        descartar_palabra = True
+
+                if (not descartar_palabra):
+                    descartar_palabra = not tiene_igual_synset(distractor, palabra_synset)
+                # descartar_palabra = descartar_palabra or not tiene_igual_synset(palabra_final, palabra_synset)
+                # igual_categoria = igual_categoria or ((pos_tag_final == pos_tag) and tiene_igual_synset(palabra_movers_final, palabra_synset))
+        if not descartar_palabra:
+            opciones_movers.append(palabra_movers)
+    print(palabra)
+    print(palabra_synset)
+    print(oracion)
+    print(opciones_movers)
     return opciones_movers
 
 # Funcion que retorna 3 opciones similares pero con baja probabilidad en el modelo de lenguaje
