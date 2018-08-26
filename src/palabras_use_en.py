@@ -99,11 +99,16 @@ def filtro_pos_tagger(palabra, oracion):
                 opciones_movers.append(distractor_verbo)
             else:
                 opciones_movers.append(palabra_movers)
-    print(palabra)
-    print(palabra_synset)
-    print(oracion)
-    print(opciones_movers)
     return opciones_movers
+
+def filtro_similaridad(palabra, distractores, cota_similaridad = 0.3):
+    modelo_embeddings = Embeddings('wiki-simple.model')
+    variantes = []
+    for distractor in distractores:
+        similarity = modelo_embeddings.similarity(palabra, distractor)
+        if (similarity > cota_similaridad):
+            variantes.append(distractor)
+    return variantes
 
 # Funcion que retorna 3 opciones similares pero con baja probabilidad en el modelo de lenguaje
 def obtener_opciones(palabra, oracion):

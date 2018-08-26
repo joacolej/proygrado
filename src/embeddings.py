@@ -18,3 +18,9 @@ class Embeddings:
         most_similar = self.model.wv.most_similar(positive=word)
         # Palabras to uft8
         return list(map(lambda (palabra, prob): (to_utf8(palabra), prob), most_similar))
+
+    def similarity(self, palabra1, palabra2):
+        try:
+            return self.model.wv.similarity(palabra1, palabra2)
+        except:
+            return 0
