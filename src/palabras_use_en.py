@@ -7,7 +7,7 @@ from modelo_lenguaje import score_texto
 from embeddings import Embeddings
 from utils import abrir_json_file, postag_a_synset
 from lista_de_frecuencia import Frecuencia
-from pattern.en import tag
+from pattern.en import tag, conjugate, PAST, FUTURE
 
 frec = Frecuencia()
 
@@ -66,12 +66,14 @@ def filtro_pos_tagger(palabra, oracion):
         parsed_pos_tag = parse_pos_tags(pos_tags)
         # Encontrar si el token pertenece a la misma clase que la palabra
         descartar_palabra = False
+        es_verbo = False
         for word in parsed_pos_tag:
             if word['token'] == palabra_movers:
                 es_verbo = vb.es_verbo(word)
                 # Obtenemos el valor de la palabra a procesar
                 if (es_verbo):
                     es_verbo_presente = vb.obtener_tiempo(word['pos_tag']) == 'present'
+                    # Descartar distractor si no es verbo en presente
                     if (not es_verbo_presente):
                         descartar_palabra = True
                     distractor = vb.verbo_a_infinitivo(word['token'])
@@ -85,10 +87,18 @@ def filtro_pos_tagger(palabra, oracion):
 
                 if (not descartar_palabra):
                     descartar_palabra = not tiene_igual_synset(distractor, palabra_synset)
-                # descartar_palabra = descartar_palabra or not tiene_igual_synset(palabra_final, palabra_synset)
-                # igual_categoria = igual_categoria or ((pos_tag_final == pos_tag) and tiene_igual_synset(palabra_movers_final, palabra_synset))
         if not descartar_palabra:
-            opciones_movers.append(palabra_movers)
+            if (es_verbo):
+                tiempo_opcion = vb.obtener_tiempo(palabra['pos_tag'])
+                if (tiempo_opcion == 'past'):
+                    distractor_verbo = conjugate(palabra_movers, PAST)
+                elif (tiempo_opcion == 'past participle'):
+                    distractor_verbo = conjugate(palabra_movers, FUTURE)
+                else:
+                    distractor_verbo = palabra_movers
+                opciones_movers.append(distractor_verbo)
+            else:
+                opciones_movers.append(palabra_movers)
     print(palabra)
     print(palabra_synset)
     print(oracion)
