@@ -43,18 +43,6 @@ def filtrar_opciones_por_frecuencia(opciones):
     mejores_por_frecuencia = opciones_ordenadas[:10]
     return mejores_por_frecuencia
 
-def obtener_opciones_movers(pos_tag, oracion):
-    data = abrir_json_file('../recursos/lista_palabras_movers.json')
-    palabras_movers = data['palabras']
-    opciones_movers = []
-    palabra_synset = postag_a_synset(pos_tag)
-    for palabra_movers in palabras_movers:
-        # Encontrar si el token pertenece a la misma clase que la palabra
-        igual_categoria = tiene_igual_synset(palabra_movers, palabra_synset)
-        if igual_categoria:
-            opciones_movers.append(palabra_movers)
-    return opciones_movers
-
 def obtener_categoria_palabras(palabra):
     if (vb.es_verbo(palabra)):
         return 'verbos'
@@ -102,19 +90,13 @@ def filtro_pos_tagger(palabra, oracion):
                 opciones_movers.append(palabra_movers)
     return opciones_movers
 
-def filtro_categoria_movers(palabra, oracion):
+def filtro_categoria_movers(palabra):
     data = abrir_json_file('../recursos/lista_palabras_movers.json')
     categoria_palabras_movers = obtener_categoria_palabras(palabra)
     palabras_movers = data[categoria_palabras_movers]
     opciones_movers = []
+    es_verbo = vb.es_verbo(palabra)
     for palabra_movers in palabras_movers:
-        texto_opcion = oracion.replace(palabra['token'], palabra_movers)
-        pos_tags = tag(texto_opcion)
-        parsed_pos_tag = parse_pos_tags(pos_tags)
-        es_verbo = False
-        for word in parsed_pos_tag:
-            if word['token'] == palabra_movers:
-                es_verbo = vb.es_verbo(word)
         if (es_verbo):
             tiempo_opcion = vb.obtener_tiempo(palabra['pos_tag'])
             distractor_conjugado = vb.conjugar_verbo(palabra_movers, tiempo_opcion)
@@ -124,7 +106,7 @@ def filtro_categoria_movers(palabra, oracion):
     return opciones_movers
 
 def filtro_similaridad(palabra, distractores, cota_similaridad = 0.3, minimo_a_retornar = 3):
-    modelo_embeddings = Embeddings('wiki-simple.model')
+    modelo_embeddings = Embeddings('../recursos/modelos/wiki-simple.model')
     todas_variantes = []
     variantes = []
     for distractor in distractores:
