@@ -55,9 +55,15 @@ def obtener_opciones_movers(pos_tag, oracion):
             opciones_movers.append(palabra_movers)
     return opciones_movers
 
+def obtener_categoria_palabras(palabra):
+    if (vb.es_verbo(palabra)):
+        return 'verbos'
+    return 'sustantivos'
+
 def filtro_pos_tagger(palabra, oracion):
     data = abrir_json_file('../recursos/lista_palabras_movers.json')
-    palabras_movers = data['palabras']
+    categoria_palabras_movers = obtener_categoria_palabras(palabra)
+    palabras_movers = data[categoria_palabras_movers]
     opciones_movers = []
     palabra_synset = postag_a_synset(palabra['pos_tag'])
     for palabra_movers in palabras_movers:
@@ -90,25 +96,47 @@ def filtro_pos_tagger(palabra, oracion):
         if not descartar_palabra:
             if (es_verbo):
                 tiempo_opcion = vb.obtener_tiempo(palabra['pos_tag'])
-                if (tiempo_opcion == 'past'):
-                    distractor_verbo = conjugate(palabra_movers, PAST)
-                elif (tiempo_opcion == 'past participle'):
-                    distractor_verbo = conjugate(palabra_movers, FUTURE)
-                else:
-                    distractor_verbo = palabra_movers
-                opciones_movers.append(distractor_verbo)
+                distractor_conjugado = vb.conjugar_verbo(palabra_movers, tiempo_opcion)
+                opciones_movers.append(distractor_conjugado)
             else:
                 opciones_movers.append(palabra_movers)
     return opciones_movers
 
-def filtro_similaridad(palabra, distractores, cota_similaridad = 0.3):
+def filtro_categoria_movers(palabra, oracion):
+    data = abrir_json_file('../recursos/lista_palabras_movers.json')
+    categoria_palabras_movers = obtener_categoria_palabras(palabra)
+    palabras_movers = data[categoria_palabras_movers]
+    opciones_movers = []
+    for palabra_movers in palabras_movers:
+        texto_opcion = oracion.replace(palabra['token'], palabra_movers)
+        pos_tags = tag(texto_opcion)
+        parsed_pos_tag = parse_pos_tags(pos_tags)
+        es_verbo = False
+        for word in parsed_pos_tag:
+            if word['token'] == palabra_movers:
+                es_verbo = vb.es_verbo(word)
+        if (es_verbo):
+            tiempo_opcion = vb.obtener_tiempo(palabra['pos_tag'])
+            distractor_conjugado = vb.conjugar_verbo(palabra_movers, tiempo_opcion)
+            opciones_movers.append(distractor_conjugado)
+        else:
+            opciones_movers.append(palabra_movers)
+    return opciones_movers
+
+def filtro_similaridad(palabra, distractores, cota_similaridad = 0.3, minimo_a_retornar = 3):
     modelo_embeddings = Embeddings('wiki-simple.model')
+    todas_variantes = []
     variantes = []
     for distractor in distractores:
         similarity = modelo_embeddings.similarity(palabra, distractor)
+        todas_variantes.append((distractor, similarity))
         if (similarity > cota_similaridad):
             variantes.append(distractor)
-    return variantes
+    if (len(variantes) >= minimo_a_retornar):
+        return variantes
+    todas_variantes.sort(key=lambda x: x[1])
+    mejores_variantes = list(reversed(todas_variantes))
+    return map(lambda x: x[0], mejores_variantes[0:3])
 
 # Funcion que retorna 3 opciones similares pero con baja probabilidad en el modelo de lenguaje
 def obtener_opciones(palabra, oracion):

@@ -24,7 +24,7 @@ def procesar_use_en(texto):
         lista_palabras = use_en.seleccionar_palabras(oracion)
         for palabra in lista_palabras:
             referencia_actual = next(referencia)
-            variantes = use_en.filtro_pos_tagger(palabra, oracion)
+            variantes = use_en.filtro_categoria_movers(palabra, oracion)
             variantes = use_en.filtro_similaridad(palabra['token'], variantes)
             variantes_finales = use_en.filtrar_palabras(palabra['token'], variantes, oracion)
             variantes_finales.append(palabra['token'])
