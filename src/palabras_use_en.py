@@ -5,7 +5,7 @@ import sustantivos as st
 import verbos as vb
 from modelo_lenguaje import score_texto
 from embeddings import Embeddings
-from utils import abrir_json_file, postag_a_synset
+from utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
 from lista_de_frecuencia import Frecuencia
 from pattern.en import tag, conjugate, PAST, FUTURE
 
@@ -43,14 +43,9 @@ def filtrar_opciones_por_frecuencia(opciones):
     mejores_por_frecuencia = opciones_ordenadas[:10]
     return mejores_por_frecuencia
 
-def obtener_categoria_palabras(palabra):
-    if (vb.es_verbo(palabra)):
-        return 'verbos'
-    return 'sustantivos'
-
 def filtro_pos_tagger(palabra, oracion):
     data = abrir_json_file('../recursos/lista_palabras_movers.json')
-    categoria_palabras_movers = obtener_categoria_palabras(palabra)
+    categoria_palabras_movers = obtener_categoria_palabras(palabra['pos_tag'])
     palabras_movers = data[categoria_palabras_movers]
     opciones_movers = []
     palabra_synset = postag_a_synset(palabra['pos_tag'])
@@ -92,7 +87,7 @@ def filtro_pos_tagger(palabra, oracion):
 
 def filtro_categoria_movers(palabra):
     data = abrir_json_file('../recursos/lista_palabras_movers.json')
-    categoria_palabras_movers = obtener_categoria_palabras(palabra)
+    categoria_palabras_movers = obtener_categoria_palabras(palabra['pos_tag'])
     palabras_movers = data[categoria_palabras_movers]
     opciones_movers = []
     es_verbo = vb.es_verbo(palabra)
