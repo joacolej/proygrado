@@ -37,7 +37,7 @@ def obtener_opciones(palabra, oracion):
     # Posibles soluciones:
     # 1. Cambiar configuracion de word embeddings (incluyendo cambio de corpus)
     # 2. Agregar palabras por fuera de word embeddings (palabras frecuentes y lista generada) y testearlas con el modelo de lenguaje
-    modelo_embeddings = Embeddings('wiki-simple')
+    modelo_embeddings = Embeddings('../recursos/corpus-wiki-simple.txt')
     tuplas_posibles = modelo_embeddings.obtener_palabras_similares(palabra)
 
     opciones_posibles = [tupla[0] for tupla in tuplas_posibles]

@@ -6,9 +6,9 @@ from gensim.utils import to_utf8
 
 class Embeddings:
     def __init__(self, model_path = None):
-        # if not sentences is None:
-        #     self.model = Word2Vec(common_texts, size=100, window=5, min_count=1, workers=4)
-        # if not model_sentences is None:
+#        if not sentences is None:
+#            self.model = Word2Vec(common_texts, size=100, window=5, min_count=1, workers=4)
+#        if not model_path is None:
         self.model = Word2Vec.load(model_path)
 
     def guardar_modelo(self, path):
