@@ -98,7 +98,7 @@ def filtro_categoria_movers(palabra):
             opciones_movers.append(distractor_conjugado)
         else:
             opciones_movers.append(palabra_movers)
-    return opciones_movers
+    return set(opciones_movers)
 
 def filtro_similaridad(palabra, distractores, cota_similaridad = 0.3, minimo_a_retornar = 3):
     modelo_embeddings = Embeddings('../recursos/modelos/wiki-simple.model')
