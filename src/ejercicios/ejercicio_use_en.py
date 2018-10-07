@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0,'../procesamiento')
+
 import nltk
 from random import shuffle
 import sustantivos as st
