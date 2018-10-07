@@ -1,3 +1,7 @@
+import sys
+sys.path.insert(0,'../procesamiento')
+
+
 import nltk
 import verbos as vb
 import oraciones as orac
