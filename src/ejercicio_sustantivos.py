@@ -1,6 +1,12 @@
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
+print("queso")
+
 import nltk
-import sustantivos as st
-import oraciones as orac
+#import sustantivos as st
+#import oraciones as orac
 import random
 
 # Ejercicio para matchear sustantivos con sus definiciones
@@ -22,7 +28,7 @@ def procesar_ejercicio_sustantivos(texto):
         definicion_tokens = nltk.word_tokenize(definicion)
         definiciones.append(orac.sustituir_sustantivo(definicion_tokens, sustantivo['token']))
         solucion = {
-            'palabra': sustantivo['token'], 'definicion': definicion 
+            'palabra': sustantivo['token'], 'definicion': definicion
         }
         soluciones.append(solucion)
     random.shuffle(palabras)
