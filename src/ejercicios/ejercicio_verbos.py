@@ -1,7 +1,8 @@
 import nltk
-import verbos as vb
-import oraciones as orac
 from pattern.en import lexeme
+
+import procesamientos.verbos as vb
+import procesamientos.oraciones as orac
 
 def ejercicio_verbos(nombre_texto):
     archivo = open(nombre_texto, 'r+')

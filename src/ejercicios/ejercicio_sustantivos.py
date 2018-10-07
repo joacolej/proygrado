@@ -1,11 +1,9 @@
-import os,sys,inspect
-sys.path.insert(0,'../procesamiento')
-
-import palabras_use_en
 import nltk
-import sustantivos as st
-import oraciones as orac
 import random
+
+import procesamientos.palabras_use_en
+import procesamientos.sustantivos as st
+import procesamientos.oraciones as orac
 
 # Ejercicio para matchear sustantivos con sus definiciones
 def ejercicio_sustantivos(nombre_texto):
