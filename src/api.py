@@ -7,7 +7,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 from flask.json import jsonify
 from ejercicio_verbos import procesar_ejercicio_verbos
-from ejercicio_sustantivos import procesar_ejercicio_sustantivos
+from ejercicio_sustantivos import EjercicioSustantivos
 from ejercicio_use_en import procesar_use_en
 from procesamiento import serialize_ojectid
 from ejercicio import Ejercicio
@@ -28,7 +28,8 @@ class Sustantivos(Resource):
     def post(self):
         content = request.json
         texto = content.get('texto')
-        ret = procesar_ejercicio_sustantivos(texto)
+        ejercicio_sustantivos = EjercicioSustantivos(texto)
+        ret = ejercicio_sustantivos.exportar_ejercicio()
         return jsonify(ret)
 
 class UseOfEnglish(Resource):
