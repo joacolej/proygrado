@@ -1,14 +1,13 @@
 import nltk
 from nltk.stem import WordNetLemmatizer
+from procesamiento import flatten, tiene_igual_synset, parse_pos_tags
+import sustantivos as st
+import verbos as vb
+from modelo_lenguaje import score_texto
+from embeddings import Embeddings
+from utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
+from lista_de_frecuencia import Frecuencia
 from pattern.en import tag, conjugate, PAST, FUTURE
-
-from procesamientos.procesamiento import flatten, tiene_igual_synset, parse_pos_tags
-import procesamientos.sustantivos as st
-import procesamientos.verbos as vb
-from procesamientos.utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
-from recursos.modelo_lenguaje import score_texto
-from recursos.embeddings import Embeddings
-from recursos.lista_de_frecuencia import Frecuencia
 
 frec = Frecuencia()
 

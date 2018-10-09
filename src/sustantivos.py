@@ -1,10 +1,8 @@
-
 import nltk
+from procesamiento import obtener_palabras, flatten
+from diccionario import Diccionario
 from pattern.en import lemma
 from nltk.wsd import lesk
-
-from procesamientos.procesamiento import obtener_palabras, flatten
-from recursos.diccionario import Diccionario
 
 dicc = Diccionario()
 
@@ -25,7 +23,7 @@ def esta_diccionario(sustantivo):
 
 # Devuelve la definicion encontrada asociada a un sustantivo
 # Si no la encuntra devuelve NoneType
-def encontrar_definicion(sustantivo):
+def encontrar_definicion(sustantivo):    
     definicion = dicc.buscar_definicion(sustantivo)
     if definicion:
         definiciones = definicion['definiciones']
@@ -41,7 +39,7 @@ def encontrar_definicion(sustantivo):
                 definiciones = flatten(definiciones)
                 definiciones = list(filter(lambda x: x['tipo'] == 'noun', definiciones))
                 return definiciones
-    return definicion
+    return definicion 
 
 # Devuelve las palabras de un texto tokenizado que son sustantivos y ademas pertenecen al diccionario.
 def obtener_sustantivos(texto):
@@ -50,7 +48,7 @@ def obtener_sustantivos(texto):
 def filtrar_sustantivos(tokens, cant_sustantivos):
     return tokens[:cant_sustantivos]
 
-# Devuelve la definicion de un sustantivo.
+# Devuelve la definicion de un sustantivo. 
 # En caso de haber mas de una busca segun el sentido de la palabra en el texto tokenizado.
 def obtener_mejor_definicion(tokens, sustantivo):
     definiciones = encontrar_definicion(sustantivo)

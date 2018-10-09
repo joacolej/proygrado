@@ -1,11 +1,10 @@
 import nltk
 from random import shuffle
+import sustantivos as st
+import oraciones as orac
+import palabras_use_en as use_en
 import itertools
-
-import procesamientos.sustantivos as st
-import procesamientos.oraciones as orac
-import procesamientos.palabras_use_en as use_en
-from procesamientos.procesamiento import parse_pos_tags
+from procesamiento import parse_pos_tags
 
 # Ejercicio para matchear sustantivos con sus definiciones
 def ejercicio_use_en(nombre_texto):
