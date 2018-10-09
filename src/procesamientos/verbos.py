@@ -1,10 +1,12 @@
 # coding=utf-8
+
 import nltk
 import random
-from constantes import POS_TAGS_PRESENTE, POS_TAGS_PASADO_PARTICIPIO, POS_TAGS_PASADO
-from procesamiento import obtener_palabras
 from pattern.en import tenses, PAST, PRESENT, FUTURE, lemma, conjugate
-from utils import abrir_json_file
+
+from constantes import POS_TAGS_PRESENTE, POS_TAGS_PASADO_PARTICIPIO, POS_TAGS_PASADO
+from procesamientos.procesamiento import obtener_palabras
+from procesamientos.utils import abrir_json_file
 
 # Evalua según el pos tag si el token es un verbo
 def es_verbo(token_pos_tag):

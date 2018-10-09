@@ -4,7 +4,7 @@ import nltk
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 from pattern.en import pluralize, singularize
 
-import verbos as vb
+import procesamientos.verbos as vb
 from constantes import CARACTER_BLANCO
 
 # Función que separa un texto en oraciones
