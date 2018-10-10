@@ -34,7 +34,7 @@ def procesar_use_en(texto):
                 'solucion': palabra['token'],
                 'referencia': '(' + str(referencia_actual) + ')'
             }
-            texto_ejercicio.append(orac.sustituir_palabra(tokens, palabra['token'], referencia_actual))
+            texto_ejercicio.append(orac.sustituir_palabra(oracion, palabra['token'], referencia_actual))
             opciones.append(opcion)
     ejercicio = {
         'texto': '\n'.join(texto_ejercicio),
