@@ -2,7 +2,7 @@ import pandas as pd
 
 class Frecuencia:
     def __init__(self):
-        self.data = pd.read_csv('../../recursos/frequency_wikimedia', sep=" ", header=None)
+        self.data = pd.read_csv('../recursos/frequency_wikimedia', sep=" ", header=None)
         self.data.columns = ['numero', 'palabra', 'frecuencia']
         self.data = self.data.drop(columns=['numero'])
 
