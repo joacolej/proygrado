@@ -4,6 +4,7 @@ from procesamiento import flatten, tiene_igual_synset, parse_pos_tags
 import sustantivos as st
 import verbos as vb
 from modelo_lenguaje import score_texto
+from vocabulario import Vocabulario
 from embeddings import Embeddings
 from utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
 from lista_de_frecuencia import Frecuencia
@@ -13,13 +14,13 @@ frec = Frecuencia()
 
 def seleccionar_palabras(oracion, lista_palabras = None, limite = 1):
     lista = st.obtener_sustantivos(oracion) + vb.obtener_verbos(oracion)
+    lista = filtrar_vocabulario(lista)
     if not lista_palabras is None:
         lista = [palabra for palabra in lista if palabra['token'].WordNetLemmatizer() in lista_palabras]
     return frec.ordenar_por_frecuencia(lista)[0:limite]
 
 # TODO: problema de palabras duplicadas
 def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
-
     tokens = nltk.word_tokenize(oracion)
     tokens = list(filter(lambda x: x != '.' and x != ',' and x != ';', tokens))
     oracion_sin_puntuacion = ' '.join(tokens)
@@ -36,6 +37,14 @@ def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
     mejores_opciones_sorted = list(reversed(mejores_opciones))
     mejores_opciones_sorted = [elem[0] for elem in mejores_opciones_sorted]
     return mejores_opciones_sorted[0:cant_palabras]
+
+def filtrar_vocabulario(palabras):
+    lista = []
+    vocabulario = Vocabulario()
+    for palabra in palabras:
+        if vocabulario.pertenece(palabra['token']):
+            lista.append(palabra)
+    return lista
 
 def filtrar_opciones_por_frecuencia(opciones):
     mejores_por_frecuencia = []
