@@ -9,13 +9,16 @@ from embeddings import Embeddings
 from utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
 from lista_de_frecuencia import Frecuencia
 from pattern.en import tag, conjugate, PAST, FUTURE
+from random import shuffle
+import random
 
 frec = Frecuencia()
 
-def seleccionar_palabras(oracion, lista_palabras = None, limite = 1):
+def seleccionar_palabras(oracion, lista_palabras = None, limite = 1, palabras_usadas = []):
     lista = st.obtener_sustantivos(oracion) + vb.obtener_verbos(oracion)
     lista = filtrar_vocabulario(lista)
-    if not lista_palabras is None:
+    lista = [palabra for palabra in lista if palabra['token'] not in palabras_usadas]
+    if lista_palabras is not None:
         lista = [palabra for palabra in lista if palabra['token'].WordNetLemmatizer() in lista_palabras]
     return frec.ordenar_por_frecuencia(lista)[0:limite]
 
@@ -31,12 +34,14 @@ def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
     for opcion in opciones:
         texto_opcion = oracion_sin_puntuacion.replace(palabra, opcion)
         opcion_score = score_texto(texto_opcion)
-        score_diferencia = palabra_score - opcion_score
-        mejores_opciones.append((opcion, score_diferencia))
+        mejores_opciones.append((opcion, opcion_score))
     mejores_opciones.sort(key=lambda x: x[1])
-    mejores_opciones_sorted = list(reversed(mejores_opciones))
+    mejores_opciones_sorted = list((mejores_opciones))
     mejores_opciones_sorted = [elem[0] for elem in mejores_opciones_sorted]
-    return mejores_opciones_sorted[0:cant_palabras]
+    inicio = random.randint(0,15)
+    posible_opciones = mejores_opciones_sorted[inicio:inicio + 12]
+    shuffle(posible_opciones)
+    return posible_opciones[0:cant_palabras]
 
 def filtrar_vocabulario(palabras):
     lista = []
@@ -109,20 +114,22 @@ def filtro_categoria_movers(palabra):
             opciones_movers.append(palabra_movers)
     return set(opciones_movers)
 
-def filtro_similaridad(palabra, distractores, cota_similaridad = 0.3, minimo_a_retornar = 3):
+def filtro_similaridad(palabra, distractores, cota_similaridad = 0.2, minimo_a_retornar = 150, maximo_a_retornar=500):
     modelo_embeddings = Embeddings()
     todas_variantes = []
     variantes = []
     for distractor in distractores:
         similarity = modelo_embeddings.similarity(palabra, distractor)
         todas_variantes.append((distractor, similarity))
-        if (similarity > cota_similaridad):
-            variantes.append(distractor)
-    if (len(variantes) >= minimo_a_retornar):
-        return variantes
-    todas_variantes.sort(key=lambda x: x[1])
-    mejores_variantes = list(reversed(todas_variantes))
-    return map(lambda x: x[0], mejores_variantes[0:3])
+    variantes_posibles = [x for (x, val) in todas_variantes if val > cota_similaridad]
+    if len(variantes_posibles) < minimo_a_retornar:
+        todas_variantes.sort(key=lambda x: x[1])
+        mejores_variantes = list(reversed(todas_variantes))
+        return map(lambda x: x[0], mejores_variantes[2:minimo_a_retornar + 2])
+    elif len(variantes_posibles) > maximo_a_retornar:
+        ret = variantes_posibles[0:maximo_a_retornar]
+    else:
+        return variantes_posibles
 
 # Funcion que retorna 3 opciones similares pero con baja probabilidad en el modelo de lenguaje
 def obtener_opciones(palabra, oracion):
