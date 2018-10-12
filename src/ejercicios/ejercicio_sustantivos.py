@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0,'../procesamiento')
-
 import palabras_use_en
 import nltk
 import sustantivos as st

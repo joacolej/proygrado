@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0,'../procesamiento')
-
 import nltk
 from random import shuffle
 import sustantivos as st
@@ -22,9 +19,10 @@ def procesar_use_en(texto):
     texto_ejercicio = []
     oraciones = orac.separar_oraciones(texto)
     referencia = itertools.count()
+    palabras_usadas = []
     for oracion in oraciones:
         tokens = nltk.word_tokenize(oracion)
-        lista_palabras = use_en.seleccionar_palabras(oracion)
+        lista_palabras = use_en.seleccionar_palabras(oracion, palabras_usadas=palabras_usadas)
         for palabra in lista_palabras:
             referencia_actual = next(referencia)
             variantes = use_en.filtro_categoria_movers(palabra)
@@ -37,6 +35,7 @@ def procesar_use_en(texto):
                 'solucion': palabra['token'],
                 'referencia': '(' + str(referencia_actual) + ')'
             }
+            palabras_usadas.append(palabra['token'])
             texto_ejercicio.append(orac.sustituir_palabra(oracion, palabra['token'], referencia_actual))
             opciones.append(opcion)
     ejercicio = {

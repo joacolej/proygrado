@@ -2,7 +2,7 @@ import kenlm
 import nltk
 
 # model_path = '../../wiki.klm'
-model_path = '../../language-model/modelos/wiki-min.klm'
+model_path = '../../wiki-min.klm'
 model = kenlm.LanguageModel(model_path)
 
 def score_texto(texto):

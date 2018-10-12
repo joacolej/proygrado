@@ -2,7 +2,7 @@ import itertools
 from gensim.models import Word2Vec
 from gensim.utils import to_utf8
 
-model = Word2Vec.load('../recursos/modelos/wiki.en.word2vec-50.model')
+model = Word2Vec.load('../recursos/modelos/wiki.en.word2vec-achicado.model')
 
 class Embeddings:
     def __init__(self):
