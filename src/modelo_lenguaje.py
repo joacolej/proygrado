@@ -1,9 +1,9 @@
 import kenlm
 import nltk
+import os
 
-# model_path = '../../wiki.klm'
-model_path = '../../wiki-min.klm'
-model = kenlm.LanguageModel(model_path)
+MODEL_PATH=os.getenv("LANGUAGE_MODEL_PATH")
+model = kenlm.LanguageModel(MODEL_PATH)
 
 def score_texto(texto):
     texto_procesado = ' '.join(nltk.word_tokenize(texto)).lower()
