@@ -1,4 +1,4 @@
-# Proyecto de grado 2018 :notebook: :uk: 
+# Proyecto de grado 2018 :notebook: :uk:
 
 ## Instalación
 1. **Clonar repositorio**: `git clone https://github.com/joacolej/proygrado.git`
@@ -47,9 +47,15 @@ model.save('./model-word-embeddings')
 ```
 
 
-## ServidorWeb
+## Servidor Web
 **Ejecutar servidor**
 
 ```bash
 gunicorn wgsi:app
+```
+
+**Reiniciar servidor**
+
+```bash
+./restart_server.sh
 ```
