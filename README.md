@@ -61,3 +61,9 @@ model.save('./model-word-embeddings')
 ```bash
 gunicorn wgsi:app
 ```
+
+**Reiniciar servidor**
+
+```bash
+./restart_server.sh
+```
