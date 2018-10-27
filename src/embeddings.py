@@ -1,8 +1,10 @@
 import itertools
 from gensim.models import Word2Vec
 from gensim.utils import to_utf8
+import os
 
-model = Word2Vec.load('../recursos/modelos/wiki.en.word2vec-achicado.model')
+MODEL_PATH=os.getenv("EMBEDDINGS_MODEL_PATH")
+model = Word2Vec.load(MODEL_PATH)
 
 class Embeddings:
     def __init__(self):
