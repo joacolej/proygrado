@@ -1,4 +1,5 @@
 import pymongo
+from bson.objectid import ObjectId
 
 class Ejercicio:
     class __Ejercicio:
@@ -23,10 +24,10 @@ class Ejercicio:
         self.ejercicios.insert_one(ejercicio)
 
     def remover_ejercicio(self, id):
-        self.ejercicios.delete_one({ '_id': id })
+        self.ejercicios.delete_one({ '_id': ObjectId(id) })
 
     def buscar_ejercicio(self, id):
-        self.ejercicios.find_one({ '_id': id })
+        self.ejercicios.find_one({ '_id': ObjectId(id) })
 
     def listar_ejercicios(self):
         return self.ejercicios.find()
