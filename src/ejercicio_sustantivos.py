@@ -20,9 +20,12 @@ def procesar_ejercicio_sustantivos(texto):
         palabras.append(sustantivo['token'])
         definicion = st.obtener_mejor_definicion(tokens, sustantivo['token'])
         definicion_tokens = nltk.word_tokenize(definicion)
-        definiciones.append(orac.sustituir_sustantivo(definicion_tokens, sustantivo['token']))
+        definicion_oculta = orac.sustituir_sustantivo(definicion_tokens, sustantivo['token'])
+        definiciones.append(definicion_oculta)
         solucion = {
-            'palabra': sustantivo['token'], 'definicion': definicion 
+            'palabra': sustantivo['token'],
+            'definicion': definicion,
+            'definicion_oculta': definicion_oculta
         }
         soluciones.append(solucion)
     random.shuffle(palabras)
