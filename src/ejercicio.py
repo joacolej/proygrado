@@ -1,5 +1,6 @@
 import pymongo
 from bson.objectid import ObjectId
+import datetime
 
 class Ejercicio:
     class __Ejercicio:
@@ -21,6 +22,7 @@ class Ejercicio:
         return getattr(self.instance, name)
 
     def agregar_ejercicio(self, ejercicio):
+        ejercicio['date'] = datetime.datetime.utcnow()
         self.ejercicios.insert_one(ejercicio)
 
     def remover_ejercicio(self, id):
