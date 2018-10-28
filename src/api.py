@@ -6,10 +6,10 @@ from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 from flask.json import jsonify
-from ejercicio_verbos import procesar_ejercicio_verbos
-from ejercicio_sustantivos import EjercicioSustantivos
-from ejercicio_use_en import procesar_use_en
-from procesamiento import serialize_ojectid
+from ejercicios.ejercicio_verbos import procesar_ejercicio_verbos
+from ejercicios.ejercicio_sustantivos import EjercicioSustantivos
+from ejercicios.ejercicio_use_en import procesar_use_en
+from procesamientos.procesamiento import serialize_ojectid
 from ejercicio import Ejercicio
 import json
 

@@ -1,20 +1,17 @@
-import sys
-sys.path.insert(0,'../procesamiento')
-
-import palabras_use_en
+import procesamientos.palabras_use_en
+import procesamientos.sustantivos as st
+import procesamientos.oraciones as orac
 import nltk
-import sustantivos as st
-import oraciones as orac
 import random
 
 
 class ItemEjercicioSustantivos():
 
-    def __init__(self, palabra, posicion, definicion):
+    def __init__(self, palabra, posicion, definicion, definicion_oculta):
         self.palabra = palabra
         self.posicion = posicion
         self.definicion = definicion
-
+        self.definicion_oculta = definicion_oculta
 
 class EjercicioSustantivos():
 
@@ -30,10 +27,10 @@ class EjercicioSustantivos():
         for sustantivo in lista_sustantivos:
             palabra = sustantivo['token']
             posicion = sustantivo['posicion']
-            definicion_inicial = st.obtener_mejor_definicion(tokens, palabra)
-            definicion_tokens = nltk.word_tokenize(definicion_inicial)
-            definicion = (orac.sustituir_sustantivo(definicion_tokens, sustantivo['token']))
-            item = ItemEjercicioSustantivos(palabra, posicion, definicion)
+            definicion = st.obtener_mejor_definicion(tokens, palabra)
+            definicion_tokens = nltk.word_tokenize(definicion)
+            definicion_oculta = (orac.sustituir_sustantivo(definicion_tokens, sustantivo['token']))
+            item = ItemEjercicioSustantivos(palabra, posicion, definicion, definicion_oculta)
             items_ejercicio.append(item)
         return items_ejercicio
 

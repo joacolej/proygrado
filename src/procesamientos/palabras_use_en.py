@@ -1,13 +1,13 @@
 import nltk
 from nltk.stem import WordNetLemmatizer
-from procesamiento import flatten, tiene_igual_synset, parse_pos_tags
-import sustantivos as st
-import verbos as vb
-from modelo_lenguaje import score_texto
-from vocabulario import Vocabulario
-from embeddings import Embeddings
+from procesamientos.procesamiento import flatten, tiene_igual_synset, parse_pos_tags
+import procesamientos.sustantivos as st
+import procesamientos.verbos as vb
+from recursos.modelo_lenguaje import score_texto
+from recursos.vocabulario import Vocabulario
+from recursos.embeddings import Embeddings
+from recursos.lista_de_frecuencia import Frecuencia
 from utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
-from lista_de_frecuencia import Frecuencia
 from pattern.en import tag, conjugate, PAST, FUTURE
 from random import shuffle
 import random
