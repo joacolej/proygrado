@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 # Load environment variables
-load_dotenv('../.env')
+load_dotenv('.env')
 
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
