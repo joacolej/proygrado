@@ -17,15 +17,18 @@ def obtener_palabras(filtro, texto):
     return palabras
 
 def tiene_igual_synset(palabra, pos_tag):
-    synsets = wordnet.synsets(palabra) 
+    synsets = wordnet.synsets(palabra)
     return any(synset.pos() == pos_tag and palabra in synset.lemma_names() for synset in synsets)
 
-def serialize_ojectid(lista):
+def serialize_array_objectId(lista):
     results = []
     for document in lista:
-        document['_id'] = str(document['_id'])
-        results.append(document)
+        results.append(serialize_objectId(document))
     return results
+
+def serialize_objectId(document):
+    document['_id'] = str(document['_id'])
+    return document
 
 def obtener_frecuencias(texto):
     frecuencias = {}
