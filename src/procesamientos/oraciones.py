@@ -30,5 +30,9 @@ def sustituir_palabra(oracion, palabra, idx):
     oracion_sustituida = oracion.replace(palabra, '(' + str(idx) + ') ' + CARACTER_BLANCO, 1)
     return oracion_sustituida
 
+def sustituir_referencia(oracion, idx, palabra):
+    oracion_sustituida = oracion.replace('(' + str(idx) + ') ' + CARACTER_BLANCO, palabra, 1)
+    return oracion_sustituida
+    
 def es_la_misma_palabra(x, sustantivo):
     return (x == singularize(sustantivo) or x == pluralize(singularize(sustantivo)))
