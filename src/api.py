@@ -8,7 +8,7 @@ from flask_cors import CORS
 from flask.json import jsonify
 from ejercicios.ejercicio_verbos import procesar_ejercicio_verbos
 from ejercicios.ejercicio_sustantivos import EjercicioSustantivos
-from ejercicios.ejercicio_use_en import procesar_use_en
+from ejercicios.ejercicio_use_en import EjercicioUseEn
 from procesamientos.procesamiento import serialize_array_objectId, serialize_objectId
 from ejercicio import Ejercicio
 from recursos.diccionario import Diccionario
@@ -37,7 +37,8 @@ class UseOfEnglish(Resource):
     def post(self):
         content = request.json
         texto = content.get('texto')
-        ret = procesar_use_en(texto)
+        ejercicio_use_en = EjercicioUseEn(texto)
+        ret = ejercicio_use_en.exportar_ejercicio()
         return jsonify(ret)
 
 class EjercicioArmado(Resource):
