@@ -12,6 +12,7 @@ from ejercicios.ejercicio_use_en import EjercicioUseEn
 from procesamientos.procesamiento import serialize_array_objectId, serialize_objectId
 from ejercicio import Ejercicio
 from recursos.diccionario import Diccionario
+from recursos.vocabulario import Vocabulario
 import json
 
 app = Flask(__name__)
@@ -77,12 +78,34 @@ class Definicion(Resource):
         except:
             return 'definicion no encontrada', 404
 
+class Palabras(Resource):
+    def get(self):
+        vocabulario = map(lambda x: x['palabra'], list(Vocabulario().listar_vocabulario()))
+        return jsonify(vocabulario)
+
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('palabra')
+        args = parser.parse_args()
+        palabra = args['palabra']
+        Vocabulario().agregar_palabra(palabra)
+        return palabra, 201
+
+    def delete(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('palabra')
+        args = parser.parse_args()
+        palabra = args['palabra']
+        Vocabulario().remover_palabra(palabra)
+        return palabra, 200
+
 api.add_resource(Verbos, '/ejercicio-verbos', methods=['POST']) # Route_1
 api.add_resource(Sustantivos, '/ejercicio-sustantivos', methods=['POST']) # Route_2
 api.add_resource(UseOfEnglish, '/ejercicio-use-of-en', methods=['POST']) # Route_3
 api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Route_4
 api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET']) # Route_5
 api.add_resource(Definicion, '/definiciones/<palabra>', methods=['GET']) # Route_6
+api.add_resource(Palabras, '/palabras', methods=['GET', 'POST', 'DELETE']) # Route_7
 
 if __name__ == '__main__':
     app.run(port='3000', threaded=True, host='0.0.0.0')
