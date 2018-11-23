@@ -8,7 +8,7 @@ class Categorias:
             client = pymongo.MongoClient('localhost', puerto)
             db = client.categorias_db
             self.categorias = db.categorias
-            self.categorias.create_index('palabra', unique=True)
+            self.categorias.create_index('nombre', unique=True)
 
     instance = None
 
