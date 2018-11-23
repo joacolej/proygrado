@@ -29,7 +29,7 @@ class Ejercicio:
         self.ejercicios.delete_one({ '_id': ObjectId(id) })
 
     def buscar_ejercicio(self, id):
-        self.ejercicios.find_one({ '_id': ObjectId(id) })
+        return self.ejercicios.find_one({ '_id': ObjectId(id) })
 
     def listar_ejercicios(self):
         return self.ejercicios.find()

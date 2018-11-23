@@ -13,31 +13,37 @@ from procesamientos.procesamiento import serialize_array_objectId, serialize_obj
 from ejercicio import Ejercicio
 from recursos.diccionario import Diccionario
 from recursos.vocabulario import Vocabulario
+from recursos.textos import Textos
 import json
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+def pre_procesamiento_ejercicio(request):
+    content = request.json
+    texto = content.get('texto')
+    recordar_texto = content.get('recordar_texto')
+    if recordar_texto:
+        Textos().agregar_texto(texto)
+    return texto
+
 class Verbos(Resource):
     def post(self):
-        content = request.json
-        texto = content.get('texto')
+        texto = pre_procesamiento_ejercicio(request)
         ret = procesar_ejercicio_verbos(texto)
         return jsonify(ret)
 
 class Sustantivos(Resource):
     def post(self):
-        content = request.json
-        texto = content.get('texto')
+        texto = pre_procesamiento_ejercicio(request)
         ejercicio_sustantivos = EjercicioSustantivos(texto)
         ret = ejercicio_sustantivos.exportar_ejercicio()
         return jsonify(ret)
 
 class UseOfEnglish(Resource):
     def post(self):
-        content = request.json
-        texto = content.get('texto')
+        texto = pre_procesamiento_ejercicio(request)
         ejercicio_use_en = EjercicioUseEn(texto)
         ret = ejercicio_use_en.exportar_ejercicio()
         return jsonify(ret)
