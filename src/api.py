@@ -105,6 +105,15 @@ class Palabras(Resource):
         Vocabulario().remover_palabra(palabra)
         return palabra, 200
 
+class TextosGuardados(Resource):
+    def get(self):
+        textos = map(lambda x: {
+            'date': x['date'].strftime("%Y-%m-%d %H:%M:%S"),
+            'texto': x['texto'],
+            'id': x['_id']
+        }, serialize_array_objectId(list(Textos().listar_textos())))
+        return jsonify(textos)
+
 api.add_resource(Verbos, '/ejercicio-verbos', methods=['POST']) # Route_1
 api.add_resource(Sustantivos, '/ejercicio-sustantivos', methods=['POST']) # Route_2
 api.add_resource(UseOfEnglish, '/ejercicio-use-of-en', methods=['POST']) # Route_3
@@ -112,6 +121,7 @@ api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Rout
 api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET']) # Route_5
 api.add_resource(Definicion, '/definiciones/<palabra>', methods=['GET']) # Route_6
 api.add_resource(Palabras, '/palabras', methods=['GET', 'POST', 'DELETE']) # Route_7
+api.add_resource(TextosGuardados, '/textos', methods=['GET']) # Route_8
 
 if __name__ == '__main__':
     app.run(port='3000', threaded=True, host='0.0.0.0')
