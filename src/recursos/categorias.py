@@ -1,4 +1,5 @@
 import pymongo
+import json
 
 # Singleton Categorias
 class Categorias:
@@ -36,3 +37,8 @@ class Categorias:
 
     def cargar_categorias(self, lista_categorias):
         self.categorias.insert_many(lista_categorias)
+
+    def seed(self):
+        with open('../recursos/categorias.json') as data_file:
+            categorias = json.load(data_file)
+        self.cargar_categorias(list(categorias))
