@@ -34,6 +34,17 @@ class EjercicioSustantivos():
             items_ejercicio.append(item)
         return items_ejercicio
 
+    def modificar_ejercicio(self, dict):
+        for item in self.items:
+            if item.palabra == dict['palabra']:
+                mod = item
+
+        for key in dict:
+            if key == 'definicion':
+                mod.definicion = dict['definicion']
+                mod.definicion_oculta = (orac.sustituir_sustantivo(nltk.word_tokenize(mod.definicion), mod.palabra))
+
+
     def exportar_ejercicio(self):
         palabras = []
         definiciones = []
