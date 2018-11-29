@@ -51,10 +51,7 @@ class EjercicioUseEn():
 
     def eliminar_item(self, referencia):
         item = [x for x in self.items if x.referencia == referencia][0]
-        print(item.solucion)
-        print(self.parrafo_sustituido)
         self.parrafo_sustituido = orac.sustituir_referencia(self.parrafo_sustituido, referencia, item.solucion)
-        print(self.parrafo_sustituido)
         self.numeros_siguientes.append(referencia)
 
     def agregar_item(self, solucion, variantes):
@@ -67,6 +64,14 @@ class EjercicioUseEn():
         item = ItemEjercicioUseEn(solucion, variantes_finales, referencia)
         self.parrafo_sustituido = orac.sustituir_palabra(self.parrafo_sustituido, solucion, referencia)
         self.items.append(item)
+
+    def modificar_item(self, dict):
+        for item in self.items:
+            if item.referencia == dict['referencia']:
+                mod = item
+
+        for key in dict:
+            setattr(mod, key, dict[key])
 
     def exportar_ejercicio(self):
         opciones = []
