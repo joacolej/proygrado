@@ -14,11 +14,12 @@ class ItemEjercicioUseEn():
         self.referencia = referencia
 
 class EjercicioUseEn():
-    def __init__(self, parrafo):
+    def __init__(self, parrafo, ejercicio = None):
         self.referencia = itertools.count()
         self.parrafo = parrafo
         self.numeros_siguientes = []
-        ejercicio = self.procesar_use_en(parrafo)
+        if not ejercicio:
+            ejercicio = self.procesar_use_en(parrafo)
         self.parrafo_sustituido = ejercicio['texto']
         self.items = ejercicio['items']
 
@@ -79,8 +80,10 @@ class EjercicioUseEn():
             }
             opciones.append(opcion)
         ejercicio = {
+        'texto_original': self.parrafo,
         'texto': self.parrafo_sustituido,
-        'opciones': opciones
+        'opciones': opciones,
+        'tipo': 'use_en'
         }
         return ejercicio
 

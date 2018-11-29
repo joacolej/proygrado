@@ -15,9 +15,12 @@ class ItemEjercicioSustantivos():
 
 class EjercicioSustantivos():
 
-    def __init__(self, parrafo):
+    def __init__(self, parrafo, items = None):
         self.parrafo = parrafo
-        self.items = self.procesar_ejercicio_sustantivos(parrafo)
+        if not items:
+            self.items = self.procesar_ejercicio_sustantivos(parrafo)
+        else:
+            self.items = items
 
     def procesar_ejercicio_sustantivos(self, texto):
         items_ejercicio = []
@@ -42,12 +45,13 @@ class EjercicioSustantivos():
             palabras.append(item.palabra)
             definiciones.append(item.definicion)
             solucion = {
-                'palabra': item.palabra, 'definicion': item.definicion
+                'palabra': item.palabra, 'definicion': item.definicion,
             }
             soluciones.append(solucion)
         random.shuffle(palabras)
         random.shuffle(definiciones)
         ejercicio = {
+            'texto': self.parrafo,
             'palabras': palabras,
             'definiciones': definiciones,
             'soluciones': soluciones,
