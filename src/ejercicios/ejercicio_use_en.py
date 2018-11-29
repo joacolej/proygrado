@@ -29,7 +29,6 @@ class EjercicioUseEn():
         oraciones = orac.separar_oraciones(texto)
         palabras_usadas = []
         for oracion in oraciones:
-            tokens = nltk.word_tokenize(oracion)
             lista_palabras = use_en.seleccionar_palabras(oracion, palabras_usadas=palabras_usadas)
             for palabra in lista_palabras:
                 referencia_actual = next(self.referencia)

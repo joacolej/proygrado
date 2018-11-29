@@ -28,7 +28,6 @@ def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
     tokens = list(filter(lambda x: x != '.' and x != ',' and x != ';', tokens))
     oracion_sin_puntuacion = ' '.join(tokens)
 
-    palabra_score = score_texto(oracion_sin_puntuacion)
     # Las mejores opciones son las que tienen mas distancia en el score
     mejores_opciones = []
     for opcion in opciones:
