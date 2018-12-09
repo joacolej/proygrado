@@ -22,8 +22,8 @@ def importar_ejercicio(dict_ex):
             item = ItemEjercicioUseEn(opcion['solucion'], opcion['variantes'], referencia)
             items.append(item)
         ejercicio = {
-        'texto' : dict_ex['texto'],
-        'items' : items
+            'texto' : dict_ex['texto'],
+            'items' : items
         }
         ret = EjercicioUseEn(dict_ex['texto_original'], ejercicio)
     elif dict_ex['tipo'] == 'verbos':
@@ -33,8 +33,8 @@ def importar_ejercicio(dict_ex):
             item = ItemEjercicioVerbos(opcion['solucion'], opcion['variantes'], referencia, opcion['posicion'], opcion['tiempo_verbal'])
             items.append(item)
         ejercicio = {
-        'texto' : dict_ex['texto'],
-        'items' : items
+            'texto' : dict_ex['texto'],
+            'items' : items
         }
         ret = EjercicioVerbos(dict_ex['texto_original'], ejercicio)
 
