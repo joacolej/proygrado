@@ -31,7 +31,6 @@ class EjercicioUseEn():
         oraciones = orac.separar_oraciones(texto)
         palabras_usadas = []
         for oracion in oraciones:
-            tokens = nltk.word_tokenize(oracion)
             lista_palabras = use_en.seleccionar_palabras(oracion, palabras_usadas=palabras_usadas)
             if len(lista_palabras) == 0:
                 texto_ejercicio.append(oracion)
@@ -58,14 +57,11 @@ class EjercicioUseEn():
         dicc = { '(': '', ')': '' }
         referencia = orac.sustituir_todos(referencia, dicc)
         item = [x for x in self.items if x.referencia == referencia][0]
-        print(item.solucion)
-        print(self.parrafo_sustituido)
         dicc = { '(' + referencia + ') ' + CARACTER_BLANCO: item.solucion }
         for i in range(int(item.referencia), len(self.items) - 1):
             dicc['(' + str(i + 1) + ') '] = '(' + str(i) + ') '
             self.items[i+1].referencia = str(i)
         self.parrafo_sustituido = orac.sustituir_todos(self.parrafo_sustituido, dicc)
-        print(self.parrafo_sustituido)
         self.items.remove(item)
         self.numeros_siguientes.append(referencia)
 
@@ -79,6 +75,14 @@ class EjercicioUseEn():
         item = ItemEjercicioUseEn(solucion, variantes_finales, referencia)
         self.parrafo_sustituido = orac.sustituir_palabra(self.parrafo_sustituido, solucion, referencia)
         self.items.append(item)
+
+    def modificar_item(self, dict):
+        for item in self.items:
+            if item.referencia == dict['referencia']:
+                mod = item
+
+        for key in dict:
+            setattr(mod, key, dict[key])
 
     def exportar_ejercicio(self):
         opciones = []

@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "animals",
+        "synset_id": "animal.n.01"
+    },
+    {
+        "nombre": "vehicles",
+        "synset_id": "vehicle.n.01"
+    },
+    {
+        "nombre": "colors",
+        "synset_id": "color.n.01"
+    },
+    {
+        "nombre": "clothing",
+        "synset_id": "clothing.n.01"
+    },
+    {
+        "nombre": "sports",
+        "synset_id": "sport.n.01"
+    }
+]
