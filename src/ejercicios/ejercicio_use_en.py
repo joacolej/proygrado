@@ -5,6 +5,7 @@ import procesamientos.oraciones as orac
 import procesamientos.palabras_use_en as use_en
 import itertools
 from procesamientos.procesamiento import parse_pos_tags
+from constantes import CARACTER_BLANCO
 
 class ItemEjercicioUseEn():
 
@@ -32,6 +33,8 @@ class EjercicioUseEn():
         for oracion in oraciones:
             tokens = nltk.word_tokenize(oracion)
             lista_palabras = use_en.seleccionar_palabras(oracion, palabras_usadas=palabras_usadas)
+            if len(lista_palabras) == 0:
+                texto_ejercicio.append(oracion)
             for palabra in lista_palabras:
                 referencia_actual = next(self.referencia)
                 variantes = use_en.filtro_categoria_movers(palabra)
@@ -52,11 +55,18 @@ class EjercicioUseEn():
         return ejercicio
 
     def eliminar_item(self, referencia):
+        dicc = { '(': '', ')': '' }
+        referencia = orac.sustituir_todos(referencia, dicc)
         item = [x for x in self.items if x.referencia == referencia][0]
         print(item.solucion)
         print(self.parrafo_sustituido)
-        self.parrafo_sustituido = orac.sustituir_referencia(self.parrafo_sustituido, referencia, item.solucion)
+        dicc = { '(' + referencia + ') ' + CARACTER_BLANCO: item.solucion }
+        for i in range(int(item.referencia), len(self.items) - 1):
+            dicc['(' + str(i + 1) + ') '] = '(' + str(i) + ') '
+            self.items[i+1].referencia = str(i)
+        self.parrafo_sustituido = orac.sustituir_todos(self.parrafo_sustituido, dicc)
         print(self.parrafo_sustituido)
+        self.items.remove(item)
         self.numeros_siguientes.append(referencia)
 
     def agregar_item(self, solucion, variantes):
