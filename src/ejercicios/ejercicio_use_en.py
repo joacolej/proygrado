@@ -97,7 +97,7 @@ class EjercicioUseEn():
         'texto_original': self.parrafo,
         'texto': self.parrafo_sustituido,
         'opciones': opciones,
-        'tipo': 'use_en'
+        'tipo': 'use_of_en'
         }
         return ejercicio
 
