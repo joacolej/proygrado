@@ -3,7 +3,6 @@
 import nltk
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 from pattern.en import pluralize, singularize
-
 import verbos as vb
 from constantes import CARACTER_BLANCO
 
@@ -36,3 +35,8 @@ def sustituir_referencia(oracion, idx, palabra):
     
 def es_la_misma_palabra(x, sustantivo):
     return (x == singularize(sustantivo) or x == pluralize(singularize(sustantivo)))
+
+def sustituir_todos(texto, dicc):
+    for i, j in dicc.iteritems():
+        texto = texto.replace(i, j, 1)
+    return texto
