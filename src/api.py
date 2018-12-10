@@ -74,12 +74,8 @@ class EjercicioArmado(Resource):
         ej = Ejercicio()
         content = request.json
         ejercicio = content.get('ejercicio')
-        ej.agregar_ejercicio(ejercicio)
-        response = {
-            'message': 'Ejercicio creado'
-        }
-        resp = jsonify(response)
-        resp.status_code = 201
+        ejercicio_ex = ej.agregar_ejercicio(ejercicio)
+        resp = jsonify(serialize_objectId(ejercicio_ex))
         return resp
 
     def get(self):
