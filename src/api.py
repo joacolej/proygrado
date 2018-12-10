@@ -14,7 +14,7 @@ from ejercicio import Ejercicio
 from recursos.diccionario import Diccionario
 from recursos.vocabulario import Vocabulario
 from recursos.textos import Textos
-from ejercicios.importar import importar_ejercicio
+from ejercicios.importar import importar_ejercicio, importar_st_modificado
 import json
 
 app = Flask(__name__)
@@ -42,6 +42,15 @@ class Sustantivos(Resource):
         ejercicio_sustantivos = EjercicioSustantivos(texto)
         ret = ejercicio_sustantivos.exportar_ejercicio()
         return jsonify(ret)
+
+    def put(self):
+        content = request.json
+        ejercicio_ex = content.get('ejercicio')
+        referencia = content.get('referencia')
+        definicion = content.get('definicion')
+        ejercicio = importar_st_modificado(ejercicio_ex, referencia, definicion)
+        ejercicio_actualizado = ejercicio.exportar_ejercicio()
+        return jsonify(ejercicio_actualizado)
 
 class UseOfEnglish(Resource):
     def post(self):
@@ -127,7 +136,7 @@ class TextosGuardados(Resource):
         return jsonify(textos)
 
 api.add_resource(Verbos, '/ejercicio-verbos', methods=['POST']) # Route_1
-api.add_resource(Sustantivos, '/ejercicio-sustantivos', methods=['POST']) # Route_2
+api.add_resource(Sustantivos, '/ejercicio-sustantivos', methods=['POST', 'PUT']) # Route_2
 api.add_resource(UseOfEnglish, '/ejercicio-use-of-en', methods=['POST']) # Route_3
 api.add_resource(EliminarReferencias, '/eliminar-referencia', methods=['PUT']) # Route_4
 api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Route_5

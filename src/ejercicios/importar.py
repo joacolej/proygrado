@@ -6,13 +6,25 @@ import json
 import nltk
 
 
+def importar_st_modificado(dict_ex, palabra, definicion):
+    items = []
+    for sol in dict_ex['soluciones']:
+        if palabra == sol['palabra']:
+            definicion_oculta = orac.sustituir_sustantivo(nltk.word_tokenize(definicion), sol['palabra'])
+            item = ItemEjercicioSustantivos(sol['palabra'], None, definicion, definicion_oculta)
+        else:
+            item = ItemEjercicioSustantivos(sol['palabra'], None, sol['definicion'], sol['definicion_oculta'])
+        items.append(item)
+    ret = EjercicioSustantivos(dict_ex['texto'], items)
+    return ret
+
+
 def importar_ejercicio(dict_ex):
     items = []
 
     if dict_ex['tipo'] == 'sustantivos':
         for sol in dict_ex['soluciones']:
-            definicion_oculta = (orac.sustituir_sustantivo(nltk.word_tokenize(sol['definicion']), sol['palabra']))
-            item = ItemEjercicioSustantivos(sol['palabra'], None, sol['definicion'], definicion_oculta)
+            item = ItemEjercicioSustantivos(sol['palabra'], None, sol['definicion'], sol['definicion_oculta'])
             items.append(item)
         ret = EjercicioSustantivos(dict_ex['texto'], items)
     elif dict_ex['tipo'] == 'use_of_en':
