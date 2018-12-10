@@ -54,9 +54,9 @@ class EjercicioSustantivos():
         soluciones = []
         for item in self.items:
             palabras.append(item.palabra)
-            definiciones.append(item.definicion)
+            definiciones.append(item.definicion_oculta)
             solucion = {
-                'palabra': item.palabra, 'definicion': item.definicion,
+                'palabra': item.palabra, 'definicion': item.definicion, 'definicion_oculta': item.definicion_oculta
             }
             soluciones.append(solucion)
         random.shuffle(palabras)
@@ -79,7 +79,7 @@ class EjercicioSustantivos():
             definicion = definiciones[0]['definicion']
             definicion_tokens = nltk.word_tokenize(definicion)
             defi = (orac.sustituir_sustantivo(definicion_tokens, palabra))
-            item = ItemEjercicioSustantivos(palabra, posicion, defi)
+            item = ItemEjercicioSustantivos(palabra, posicion, defi, None)
         else:
-            item = ItemEjercicioSustantivos(palabra, posicion, definicion)
+            item = ItemEjercicioSustantivos(palabra, posicion, definicion, None)
         self.items.append(item)
