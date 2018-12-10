@@ -23,7 +23,8 @@ class Ejercicio:
 
     def agregar_ejercicio(self, ejercicio):
         ejercicio['date'] = datetime.datetime.utcnow()
-        self.ejercicios.insert_one(ejercicio)
+        ejercicio_id = self.ejercicios.insert_one(ejercicio).inserted_id
+        return self.buscar_ejercicio(ejercicio_id)
 
     def remover_ejercicio(self, id):
         self.ejercicios.delete_one({ '_id': ObjectId(id) })
