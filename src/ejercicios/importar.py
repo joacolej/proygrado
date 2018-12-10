@@ -15,7 +15,7 @@ def importar_ejercicio(dict_ex):
             item = ItemEjercicioSustantivos(sol['palabra'], None, sol['definicion'], definicion_oculta)
             items.append(item)
         ret = EjercicioSustantivos(dict_ex['texto'], items)
-    elif dict_ex['tipo'] == 'use_en':
+    elif dict_ex['tipo'] == 'use_of_en':
         for opcion in dict_ex['opciones']:
             dicc = { '(': '', ')': '' }
             referencia = orac.sustituir_todos(opcion['referencia'], dicc)
