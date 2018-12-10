@@ -4,7 +4,6 @@ import procesamientos.hiponimos as hip
 from recursos.categorias import Categorias
 import nltk
 import random
-import itertools
 from pattern.en import lemma
 
 class ItemEjercicioHiponimos():
@@ -16,7 +15,6 @@ class ItemEjercicioHiponimos():
 class EjercicioHiponimos():
     def __init__(self, parrafo, ejercicio = None):
         self.parrafo = parrafo
-        self.referencia = itertools.count()
         self.numeros_siguientes = []
         if not ejercicio:
             self.items = self.procesar_ejercicio_hiponimos(parrafo)
