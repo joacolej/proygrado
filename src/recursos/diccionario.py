@@ -21,8 +21,8 @@ class Diccionario:
     def __getattr__(self, name):
         return getattr(self.instance, name)
 
-    def agregar_definicion(self, definicion):
-        self.definiciones.insert_one(definicion)
+    def agregar_definicion(self, palabra, definicion):
+        self.definiciones.insert_one({ 'palabra': palabra, 'definiciones': [{ 'definicion': definicion }]})
 
     def remover_definicion(self, palabra):
         self.definiciones.delete_one({ 'palabra': palabra })
