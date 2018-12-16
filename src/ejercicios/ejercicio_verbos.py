@@ -1,7 +1,6 @@
 import nltk
 import procesamientos.verbos as vb
 import procesamientos.oraciones as orac
-import itertools
 from pattern.en import lexeme
 from constantes import CARACTER_BLANCO
 
@@ -16,7 +15,6 @@ class ItemEjercicioVerbos():
 
 class EjercicioVerbos():
     def __init__(self, parrafo, ejercicio = None):
-        self.referencia = itertools.count()
         self.parrafo = parrafo
         self.numeros_siguientes = []
         if not ejercicio:

@@ -1,6 +1,7 @@
 from ejercicios.ejercicio_use_en import EjercicioUseEn, ItemEjercicioUseEn
 from ejercicios.ejercicio_sustantivos import EjercicioSustantivos, ItemEjercicioSustantivos
 from ejercicios.ejercicio_verbos import EjercicioVerbos, ItemEjercicioVerbos
+from ejercicios.ejercicio_hiponimos import EjercicioHiponimos, ItemEjercicioHiponimos
 import procesamientos.oraciones as orac
 import json
 import nltk
@@ -49,5 +50,10 @@ def importar_ejercicio(dict_ex):
             'items' : items
         }
         ret = EjercicioVerbos(dict_ex['texto_original'], ejercicio)
+    elif dict_ex['tipo'] == 'hiponimos':
+        for opcion in dict_ex['opciones']:
+            item = ItemEjercicioHiponimos(opcion['palabra'], opcion['categoria'])
+            items.append(item)
+        ret = EjercicioHiponimos(dict_ex['texto_original'], items)
 
     return ret

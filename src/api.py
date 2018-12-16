@@ -9,6 +9,7 @@ from flask.json import jsonify
 from ejercicios.ejercicio_verbos import EjercicioVerbos
 from ejercicios.ejercicio_sustantivos import EjercicioSustantivos
 from ejercicios.ejercicio_use_en import EjercicioUseEn
+from ejercicios.ejercicio_hiponimos import EjercicioHiponimos
 from procesamientos.procesamiento import serialize_array_objectId, serialize_objectId
 from ejercicio import Ejercicio
 from recursos.diccionario import Diccionario
@@ -52,6 +53,14 @@ class Sustantivos(Resource):
         ejercicio_actualizado = ejercicio.exportar_ejercicio()
         return jsonify(ejercicio_actualizado)
 
+class Hiponimos(Resource):
+    def post(self):
+        content = request.json
+        texto = content.get('texto')
+        ejercicio_hiponimos = EjercicioHiponimos(texto)
+        ret = ejercicio_hiponimos.exportar_ejercicio()
+        return jsonify(ret)
+
 class UseOfEnglish(Resource):
     def post(self):
         texto = pre_procesamiento_ejercicio(request)
@@ -74,12 +83,8 @@ class EjercicioArmado(Resource):
         ej = Ejercicio()
         content = request.json
         ejercicio = content.get('ejercicio')
-        ej.agregar_ejercicio(ejercicio)
-        response = {
-            'message': 'Ejercicio creado'
-        }
-        resp = jsonify(response)
-        resp.status_code = 201
+        ejercicio_ex = ej.agregar_ejercicio(ejercicio)
+        resp = jsonify(serialize_objectId(ejercicio_ex))
         return resp
 
     def get(self):
@@ -149,11 +154,12 @@ api.add_resource(Verbos, '/ejercicio-verbos', methods=['POST']) # Route_1
 api.add_resource(Sustantivos, '/ejercicio-sustantivos', methods=['POST', 'PUT']) # Route_2
 api.add_resource(UseOfEnglish, '/ejercicio-use-of-en', methods=['POST']) # Route_3
 api.add_resource(EliminarReferencias, '/eliminar-referencia', methods=['PUT']) # Route_4
-api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Route_5
-api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET', 'POST']) # Route_6
-api.add_resource(Definicion, '/definiciones/<palabra>', methods=['GET']) # Route_7
-api.add_resource(Palabras, '/palabras', methods=['GET', 'POST', 'DELETE']) # Route_8
-api.add_resource(TextosGuardados, '/textos', methods=['GET']) # Route_9
+api.add_resource(Hiponimos, '/ejercicio-hiponimos', methods=['POST']) # Route_5
+api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Route_6
+api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET', 'POST']) # Route_7
+api.add_resource(Definicion, '/definiciones/<palabra>', methods=['GET']) # Route_8
+api.add_resource(Palabras, '/palabras', methods=['GET', 'POST', 'DELETE']) # Route_9
+api.add_resource(TextosGuardados, '/textos', methods=['GET']) # Route_10
 
 if __name__ == '__main__':
     app.run(port='3000', threaded=True, host='0.0.0.0')

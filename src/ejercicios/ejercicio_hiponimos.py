@@ -6,10 +6,20 @@ import nltk
 import random
 from pattern.en import lemma
 
+class ItemEjercicioHiponimos():
+
+    def __init__(self, palabra, categoria):
+        self.palabra = palabra
+        self.categoria = categoria
+
 class EjercicioHiponimos():
-    def __init__(self, parrafo):
+    def __init__(self, parrafo, ejercicio = None):
         self.parrafo = parrafo
-        self.items = self.procesar_ejercicio_hiponimos(parrafo)
+        self.numeros_siguientes = []
+        if not ejercicio:
+            self.items = self.procesar_ejercicio_hiponimos(parrafo)
+        else:
+            self.items = ejercicio
 
     def procesar_ejercicio_hiponimos(self, texto):
         items_ejercicio = []
@@ -25,6 +35,26 @@ class EjercicioHiponimos():
                 if es_hiponimo:
                     palabra_categoria = categoria['nombre']
             if palabra_categoria:
-                data = { 'palabra': palabra, 'categoria': palabra_categoria}
-                items_ejercicio.append(data)
+                item = ItemEjercicioHiponimos(palabra, palabra_categoria)
+                items_ejercicio.append(item)
         return items_ejercicio
+
+    def eliminar_item(self, palabra):
+        self.items = list(filter(lambda x: x.palabra != palabra, self.items))
+
+    def exportar_ejercicio(self):
+        opciones = []
+        for item in self.items:
+            opcion = {
+                'palabra': item.palabra,
+                'categoria': item.categoria
+            }
+            opciones.append(opcion)
+        categorias = [cat['nombre'] for cat in Categorias().listar_categorias()]
+        ejercicio = {
+            'texto_original': self.parrafo,
+            'opciones': opciones,
+            'categorias': categorias,
+            'tipo': 'hiponimos'
+        }
+        return ejercicio
