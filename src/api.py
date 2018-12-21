@@ -100,7 +100,7 @@ class PalabrasDefiniciones(Resource):
         definiciones = serialize_array_objectId(lista)
         palabras = map(lambda x: x['palabra'], definiciones)
         return jsonify(palabras)
-    
+
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('definicion')
@@ -110,6 +110,14 @@ class PalabrasDefiniciones(Resource):
         definicion = args['definicion']
         Diccionario().agregar_definicion(palabra, definicion)
         return palabra, 201
+
+    def delete(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('palabra')
+        args = parser.parse_args()
+        palabra = args['palabra']
+        Diccionario().remover_definicion(palabra)
+        return palabra, 200
 
 class Definicion(Resource):
     def get(self, palabra):
@@ -156,7 +164,7 @@ api.add_resource(UseOfEnglish, '/ejercicio-use-of-en', methods=['POST']) # Route
 api.add_resource(EliminarReferencias, '/eliminar-referencia', methods=['PUT']) # Route_4
 api.add_resource(Hiponimos, '/ejercicio-hiponimos', methods=['POST']) # Route_5
 api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Route_6
-api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET', 'POST']) # Route_7
+api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET', 'POST', 'DELETE']) # Route_7
 api.add_resource(Definicion, '/definiciones/<palabra>', methods=['GET']) # Route_8
 api.add_resource(Palabras, '/palabras', methods=['GET', 'POST', 'DELETE']) # Route_9
 api.add_resource(TextosGuardados, '/textos', methods=['GET']) # Route_10
