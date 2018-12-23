@@ -55,8 +55,7 @@ class Sustantivos(Resource):
 
 class Hiponimos(Resource):
     def post(self):
-        content = request.json
-        texto = content.get('texto')
+        texto = pre_procesamiento_ejercicio(request)
         ejercicio_hiponimos = EjercicioHiponimos(texto)
         ret = ejercicio_hiponimos.exportar_ejercicio()
         return jsonify(ret)
