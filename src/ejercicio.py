@@ -23,6 +23,13 @@ class Ejercicio:
 
     def agregar_ejercicio(self, ejercicio):
         ejercicio['date'] = datetime.datetime.utcnow()
+        if self.ejercicios.count() > 0:
+            ejercicios_list = list(self.listar_ejercicios())
+            ejercicios_list.reverse()
+            next_numero = ejercicios_list[0]['numero'] + 1
+            ejercicio['numero'] = next_numero
+        else:
+            ejercicio['numero'] = 1
         ejercicio_id = self.ejercicios.insert_one(ejercicio).inserted_id
         return self.buscar_ejercicio(ejercicio_id)
 
