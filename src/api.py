@@ -92,6 +92,14 @@ class EjercicioArmado(Resource):
         ejercicios = serialize_array_objectId(lista)
         return jsonify(ejercicios)
 
+    def delete(self):
+        ej = Ejercicio()
+        content = request.json
+        id = content.get('id')
+        ej.remover_ejercicio(id)
+        return id, 200
+
+
 class PalabrasDefiniciones(Resource):
     def get(self):
         dic = Diccionario()
@@ -162,7 +170,7 @@ api.add_resource(Sustantivos, '/ejercicio-sustantivos', methods=['POST', 'PUT'])
 api.add_resource(UseOfEnglish, '/ejercicio-use-of-en', methods=['POST']) # Route_3
 api.add_resource(EliminarReferencias, '/eliminar-referencia', methods=['PUT']) # Route_4
 api.add_resource(Hiponimos, '/ejercicio-hiponimos', methods=['POST']) # Route_5
-api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET']) # Route_6
+api.add_resource(EjercicioArmado, '/ejercicios', methods=['POST', 'GET', 'DELETE']) # Route_6
 api.add_resource(PalabrasDefiniciones, '/palabras-definiciones', methods=['GET', 'POST', 'DELETE']) # Route_7
 api.add_resource(Definicion, '/definiciones/<palabra>', methods=['GET']) # Route_8
 api.add_resource(Palabras, '/palabras', methods=['GET', 'POST', 'DELETE']) # Route_9
