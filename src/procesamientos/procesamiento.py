@@ -16,6 +16,14 @@ def obtener_palabras(filtro, texto):
     palabras = list(filter(filtro, pos_tags_con_posiciones))
     return palabras
 
+# Evalua segun si el pos_tag del token es un adjetivo
+def es_adjetivo(token_pos_tag):
+    pos_tag = token_pos_tag['pos_tag']
+    adjetivo_pos_tag = 'JJ'
+    if (pos_tag[0:2] == adjetivo_pos_tag):
+        return True
+    return False
+
 def tiene_igual_synset(palabra, pos_tag):
     synsets = wordnet.synsets(palabra)
     return any(synset.pos() == pos_tag and palabra in synset.lemma_names() for synset in synsets)
