@@ -38,8 +38,10 @@ class EjercicioHiponimos():
                 if es_hiponimo:
                     palabra_categoria = categoria['nombre']
             if palabra_categoria:
-                item = ItemEjercicioHiponimos(palabra_token, palabra_categoria)
-                items_ejercicio.append(item)
+                # Evitar palabras duplicadas
+                if not any(obj.palabra == palabra_token for obj in items_ejercicio):
+                    item = ItemEjercicioHiponimos(palabra_token, palabra_categoria)
+                    items_ejercicio.append(item)
         return items_ejercicio
 
     def eliminar_item(self, palabra):
