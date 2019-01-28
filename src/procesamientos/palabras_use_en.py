@@ -24,7 +24,7 @@ def seleccionar_palabras(oracion, lista_palabras = None, limite = 1, palabras_us
     return frec.ordenar_por_frecuencia(lista)[0:limite]
 
 # TODO: problema de palabras duplicadas
-def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
+def filtrar_palabras(palabra, opciones, oracion, distractores_usados, cant_palabras=3):
     tokens = nltk.word_tokenize(oracion)
     tokens = list(filter(lambda x: x != '.' and x != ',' and x != ';', tokens))
     oracion_sin_puntuacion = ' '.join(tokens)
@@ -32,9 +32,10 @@ def filtrar_palabras(palabra, opciones, oracion, cant_palabras=3):
     # Las mejores opciones son las que tienen mas distancia en el score
     mejores_opciones = []
     for opcion in opciones:
-        texto_opcion = oracion_sin_puntuacion.replace(palabra, opcion)
-        opcion_score = score_texto(texto_opcion)
-        mejores_opciones.append((opcion, opcion_score))
+        if not opcion in distractores_usados:
+            texto_opcion = oracion_sin_puntuacion.replace(palabra, opcion)
+            opcion_score = score_texto(texto_opcion)
+            mejores_opciones.append((opcion, opcion_score))
     mejores_opciones.sort(key=lambda x: x[1])
     mejores_opciones_sorted = list((mejores_opciones))
     mejores_opciones_sorted = [elem[0] for elem in mejores_opciones_sorted]
