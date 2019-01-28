@@ -7,8 +7,9 @@ class Frecuencia:
         self.data = self.data.drop(columns=['numero'])
 
     def obtener_frecuencia(self, palabra):
-        if palabra in self.data['palabra'].tolist():
-            elem = self.data.loc[self.data['palabra'] == palabra]['frecuencia']
+        token = palabra['token'].lower()
+        if token in self.data['palabra'].tolist():
+            elem = self.data.loc[self.data['palabra'] == token]['frecuencia']
             return elem.tolist()[0]
         else:
             return 0.0
@@ -20,4 +21,4 @@ class Frecuencia:
                 return palabra
 
     def ordenar_por_frecuencia(self, lista_palabras):
-        return sorted(lista_palabras, key=self.obtener_frecuencia)
+        return list(reversed(sorted(lista_palabras, key=self.obtener_frecuencia)))

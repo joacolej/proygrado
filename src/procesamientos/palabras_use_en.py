@@ -3,6 +3,7 @@ from nltk.stem import WordNetLemmatizer
 from procesamientos.procesamiento import flatten, tiene_igual_synset, parse_pos_tags
 import procesamientos.sustantivos as st
 import procesamientos.verbos as vb
+import procesamientos.preposiciones as pre
 from recursos.modelo_lenguaje import score_texto
 from recursos.vocabulario import Vocabulario
 from recursos.embeddings import Embeddings
@@ -15,7 +16,7 @@ import random
 frec = Frecuencia()
 
 def seleccionar_palabras(oracion, lista_palabras = None, limite = 1, palabras_usadas = []):
-    lista = st.obtener_sustantivos(oracion) + vb.obtener_verbos(oracion)
+    lista = st.obtener_sustantivos(oracion) + vb.obtener_verbos(oracion) + pre.obtener_preposiciones(oracion)
     lista = filtrar_vocabulario(lista)
     lista = [palabra for palabra in lista if palabra['token'] not in palabras_usadas]
     if lista_palabras is not None:
