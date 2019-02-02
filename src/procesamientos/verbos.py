@@ -3,7 +3,7 @@ import nltk
 import random
 from constantes import POS_TAGS_PRESENTE, POS_TAGS_PASADO_PARTICIPIO, POS_TAGS_PASADO
 from procesamientos.procesamiento import obtener_palabras
-from pattern.en import tenses, PAST, PRESENT, FUTURE, lemma, conjugate
+from pattern.en import tenses, PAST, PRESENT, INDICATIVE, PROGRESSIVE, lemma, conjugate
 from utils import abrir_json_file
 
 # Evalua según el pos tag si el token es un verbo
@@ -70,7 +70,7 @@ def conjugar_verbo(palabra, tiempo):
     if (tiempo == 'past'):
         return conjugate(palabra, PAST)
     elif (tiempo == 'past participle'):
-        return conjugate(palabra, FUTURE)
+        return conjugate(palabra, PAST, None, None, INDICATIVE, PROGRESSIVE)
     return palabra
 
 def verbo_a_infinitivo(verbo):

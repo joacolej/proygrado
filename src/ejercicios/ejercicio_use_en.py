@@ -30,6 +30,7 @@ class EjercicioUseEn():
         texto_ejercicio = []
         oraciones = orac.separar_oraciones(texto)
         palabras_usadas = []
+        distractores_usados = []
         for oracion in oraciones:
             lista_palabras = use_en.seleccionar_palabras(oracion, palabras_usadas=palabras_usadas)
             if len(lista_palabras) == 0:
@@ -38,10 +39,11 @@ class EjercicioUseEn():
                 referencia_actual = next(self.referencia)
                 variantes = use_en.filtro_categoria_movers(palabra)
                 variantes = use_en.filtro_similaridad(palabra['token'], variantes)
-                variantes_finales = use_en.filtrar_palabras(palabra['token'], variantes, oracion)
+                variantes_finales = use_en.filtrar_palabras(palabra['token'], variantes, oracion, distractores_usados)
                 if not palabra['token'][0].islower():
                     variantes_finales = [x.capitalize() for x in variantes_finales]
                 variantes_finales.append(palabra['token'])
+                distractores_usados = distractores_usados + variantes_finales
                 shuffle(variantes_finales)
                 item = ItemEjercicioUseEn(palabra['token'], variantes_finales, referencia_actual)
                 palabras_usadas.append(palabra['token'])
