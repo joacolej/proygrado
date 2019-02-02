@@ -54,6 +54,14 @@ model.save('./model-word-embeddings')
 
 ```
 
+## POS tagger
+Por defecto se utiliza el pos tagger de NLTK. Este POS tagger no es muy preciso, por eso se puede cambiar por el POS tagger de Stanford. Tenga en cuenta que el POS tagger de Stanford es más lento y va a impactar en la performance.
+
+Siga estos pasos para activarlo:
+1. Descargar el POS tagger de stanford: https://nlp.stanford.edu/software/stanford-postagger-2018-10-16.zip
+2. Descomprimirlo
+3. Agregar la variable en `src/.env` con la path hacia la carpeta: `STANFORD_POS_TAGGER=/Users/bernabegonzalez/Projects/stanford-postagger-2018-10-16`
+4. Agregar una variable en `src/.env` para indicar que se quiere usar Stanford y no NLTK como POS tagger: `POS_TAGGER=STANFORD`
 
 ## Servidor Web
 **Ejecutar servidor**
