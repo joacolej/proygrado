@@ -2,6 +2,10 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv('.env')
 
+import warnings
+warnings.filterwarnings("ignore", message="numpy.dtype size changed")
+warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
+
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
