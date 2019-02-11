@@ -2,7 +2,7 @@
 
 import nltk
 from nltk.corpus import wordnet as wordnet
-from pattern.en import tag
+from recursos.pos_tagger import tag
 
 # Toma un texto taggeado y devuelve una lista que contiene "token, pos_tags, posicion_palabra"
 def parse_pos_tags(pos_tags):
