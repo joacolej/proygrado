@@ -2,6 +2,8 @@ from nltk.corpus import wordnet
 
 def es_hiponimo(palabra, categoria_id, cota = 20):
     synset_categoria = wordnet.synset(categoria_id)
+    if len(wordnet.synsets(palabra)) == 0:
+        return False
     # Nos quedamos con el primer synset para v1
     synset = wordnet.synsets(palabra)[0]
     return check_hiponimo(synset, synset_categoria, cota)
