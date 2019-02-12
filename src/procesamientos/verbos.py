@@ -21,7 +21,7 @@ def es_gerundio(token_pos_tag):
 # Devuelve los verbos con su pos tag y posición en el texto ingresado
 # Retorna [{'token':token, 'pos_tag':pos_tag, 'posicion':posicion}]
 def obtener_verbos(texto):
-    return obtener_palabras(lambda x: es_verbo(x) and not es_gerundio(x), texto)
+    return obtener_palabras(lambda x: es_verbo(x) and not es_gerundio(x) and not es_negado(x), texto)
 
 def filtrar_verbos(lista_verbos):
     data = abrir_json_file('../recursos/lista_palabras_movers.json')
@@ -29,6 +29,9 @@ def filtrar_verbos(lista_verbos):
         if verbo['token'] in data['palabras']:
             lista_verbos.remove(verbo)
     return lista_verbos
+
+def es_negado(verbo):
+    "n't" in verbo
 
 def filtrar_conjugaciones(verbo, conjugaciones):
     conjugaciones = [x for x in conjugaciones if "n't" not in x and "not" not in x]
