@@ -1,7 +1,20 @@
 import json
 from lista_de_frecuencia import Frecuencia
 from utils import abrir_json_file
+from pattern.en import PAST, PRESENT, INDICATIVE, PROGRESSIVE, conjugate
 import pymongo
+
+def conjugar_verbos(lista_verbos):
+    lista_verbos_conjugados = []
+    for verbo in lista_verbos:
+        tercera_verb = conjugate(verbo, PRESENT, 3)
+        past_verb = conjugate(verbo, PAST)
+        past_participle_verb = conjugate(verbo, PAST, None, None, INDICATIVE, PROGRESSIVE)
+        lista_verbos_conjugados.append(verbo)
+        lista_verbos_conjugados.append(tercera_verb)
+        lista_verbos_conjugados.append(past_verb)
+        lista_verbos_conjugados.append(past_participle_verb)
+    return lista_verbos_conjugados
 
 # El vocabulario es la union de las palabras mas frecuentes mas la lista de palabras movers
 class Vocabulario:
@@ -29,8 +42,9 @@ class Vocabulario:
         with open('../recursos/lista_palabras_movers.json') as data_file:
             movers = json.load(data_file)
         lista_movers = movers['verbos'] + movers['determinantes'] + movers['preposiciones'] + movers['adverbios'] + movers['conjunciones'] + movers['adjetivos'] + movers['pronombres'] + movers['sustantivos']
+        verbos_conjugados = conjugar_verbos(movers['verbos'])
         palabras_frecuentes = frec.data['palabra'].tolist()[0:5000]
-        return set(lista_movers + palabras_frecuentes)
+        return set(lista_movers + palabras_frecuentes + verbos_conjugados)
 
     def generar_txt(self):
         vocabulario = self.generar_vocabulario()
