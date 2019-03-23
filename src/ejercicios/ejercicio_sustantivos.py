@@ -3,6 +3,7 @@ import procesamientos.sustantivos as st
 import procesamientos.oraciones as orac
 import nltk
 import random
+from pattern.en import singularize
 
 
 class ItemEjercicioSustantivos():
@@ -28,11 +29,11 @@ class EjercicioSustantivos():
         lista_sustantivos = st.obtener_sustantivos(texto)
         lista_sustantivos = list({ each['token'] : each for each in lista_sustantivos }.values())
         for sustantivo in lista_sustantivos:
-            palabra = sustantivo['token']
+            palabra = singularize(sustantivo['token'])
             posicion = sustantivo['posicion']
             definicion = st.obtener_mejor_definicion(tokens, palabra)
             definicion_tokens = nltk.word_tokenize(definicion)
-            definicion_oculta = (orac.sustituir_sustantivo(definicion_tokens, sustantivo['token']))
+            definicion_oculta = (orac.sustituir_sustantivo(definicion_tokens, palabra))
             item = ItemEjercicioSustantivos(palabra, posicion, definicion, definicion_oculta)
             items_ejercicio.append(item)
         return items_ejercicio
