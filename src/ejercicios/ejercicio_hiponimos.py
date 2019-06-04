@@ -4,7 +4,6 @@ from recursos.categorias import Categorias
 from procesamientos.sustantivos import es_sustantivo
 from procesamientos.procesamiento import obtener_palabras, es_adjetivo
 import nltk
-import random
 from pattern.en import lemma
 
 class ItemEjercicioHiponimos():

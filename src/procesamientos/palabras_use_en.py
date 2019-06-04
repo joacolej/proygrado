@@ -10,7 +10,6 @@ from recursos.embeddings import Embeddings
 from recursos.lista_de_frecuencia import Frecuencia
 from utils import abrir_json_file, postag_a_synset, obtener_categoria_palabras
 from pattern.en import tag, conjugate, PAST, FUTURE
-from random import shuffle
 import random
 
 frec = Frecuencia()
@@ -41,7 +40,7 @@ def filtrar_palabras(palabra, opciones, oracion, distractores_usados, cant_palab
     mejores_opciones_sorted = [elem[0] for elem in mejores_opciones_sorted]
     inicio = random.randint(0,15)
     posible_opciones = mejores_opciones_sorted[inicio:inicio + 12]
-    shuffle(posible_opciones)
+    random.shuffle(posible_opciones)
     return posible_opciones[0:cant_palabras]
 
 def filtrar_vocabulario(palabras):
@@ -115,7 +114,7 @@ def filtro_categoria_movers(palabra):
             opciones_movers.append(palabra_movers)
     return set(opciones_movers)
 
-def filtro_similaridad(palabra, distractores, cota_similaridad = 0.2, minimo_a_retornar = 150, maximo_a_retornar=500):
+def filtro_similaridad(palabra, distractores, cota_similaridad = 0.2, minimo_a_retornar = 70, maximo_a_retornar=100):
     modelo_embeddings = Embeddings()
     todas_variantes = []
     variantes = []
